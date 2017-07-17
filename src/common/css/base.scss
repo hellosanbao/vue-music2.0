@@ -1,0 +1,87 @@
+
+// 颜色定义规范
+$color-background:#2c323b;
+$color-background-d:rgba(0, 0, 0, 0.3);
+$color-highlight-background:#333;
+$color-dialog-background:#666;
+$color-theme:#ffcd32;
+$color-theme-d:rgba(255, 205, 49, 0.5);
+$color-sub-theme:#d93f30;
+$color-text:#fff;
+$color-text-d:rgba(255, 255, 255, 0.3);
+$color-text-l:rgba(255, 255, 255, 0.5);
+$color-text-ll:rgba(255, 255, 255, 0.8);
+$primary-text-color:#0c8ed9;
+
+//字体定义规范
+$font-size-small-s:0.7rem;
+$font-size-small:0.8rem;
+$font-size-medium:0.9rem;
+$font-size-medium-x:1rem;
+$font-size-big:1.2rem;
+$font-size-big-x:1.4rem;
+$font-size-large:1.6rem;
+$font-size-large-x:1.8rem;
+
+//flex布局
+.flex-warp{
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  display: -webkit-box;
+}
+.flex-con{
+  -ms-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -webkit-box-flex: 1;
+}
+.flex-con2{
+  -ms-flex:2;
+  flex:2;
+  -webkit-flex:2;
+  -webkit-box-flex: 2;
+}
+.flex-middle{
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-align: center;
+}
+.flex-center{
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-pack: center;
+}
+.flex-between{
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+.flex-vertical{
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -ms-flex-direction:column;
+  flex-direction:column;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
