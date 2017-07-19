@@ -10,18 +10,18 @@
         data(){
             return {}
         },
-        mounted(){
-            var _this=this;
-            setTimeout(()=>{
-              _this.init();
-            },20)
+        props:{
+          autoPlay:{
+            type:Number,
+            default:3000
+          }
         },
         methods: {
             init(){
               var mySwiper = new Swiper ('.swiper-container', {
                 loop: true,
                 pagination: '.swiper-pagination',
-                autoplay:3000
+                autoplay:this.autoPlay
               })
             }
         },
