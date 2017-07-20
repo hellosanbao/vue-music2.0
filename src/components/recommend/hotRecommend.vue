@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import {delaUrl, options,recommend} from '@/apiConfig';
+  import {options,recommend} from '@/apiConfig';
   import jsonp from 'common/js/jsonp';
   import axios from 'axios';
   import $ from 'jquery';

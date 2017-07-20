@@ -22,12 +22,11 @@
             }
           },
           wrap:String,
-          default:'swiper-container'
+          default:'.swiper-container'
         },
         methods: {
-            init(s){
-                console.log(s)
-              var mySwiper = new Swiper ('.swiper-container', this.slideParams)
+            init(){
+              var mySwiper = new Swiper (`.${this.wrap}`, this.slideParams)
             }
         },
     }
