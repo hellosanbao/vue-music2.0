@@ -10,3 +10,4 @@ export const recommend = {
 export const options = {
   param: 'jsonpCallback'
 }
+export const delaUrl='https://bird.ioliu.cn/v1/?url='

@@ -1,6 +1,6 @@
 <template>
-  <div class = "slide">
-    <slider :autoPlay="2000" ref="slide">
+  <div class = "recommend">
+    <slider ref="slide">
       <div class = "swiper-wrapper">
         <div class = "swiper-slide" v-for="banner in bannerList">
           <img :src = "banner.picUrl" alt = "">
@@ -8,13 +8,17 @@
       </div>
       <div class = "swiper-pagination"></div>
     </slider>
+    <hot-recommend></hot-recommend>
+    <hot-recommend-mv></hot-recommend-mv>
   </div>
 </template>
 
 <script>
   import slider from 'components/base/slider';
   import jsonp from 'common/js/jsonp';
-  import {recommend, options} from '@/apiConfig'
+  import {recommend, options} from '@/apiConfig';
+  import hotRecommend from 'components/hotRecommend';
+  import hotRecommendMv from 'components/hotRecommendMv';
   export default{
     data(){
       return {
@@ -41,7 +45,7 @@
             if(ret.code==0){
               _this.bannerList=ret.data.slider;
               setTimeout(()=>{
-                _this.$refs.slide.init();
+//                _this.$refs.slide.init();
               },20)
             }
 
@@ -49,7 +53,9 @@
       }
     },
     components: {
-      slider
+      slider,
+      hotRecommend,
+      hotRecommendMv
     }
   }
 </script>

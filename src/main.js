@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import 'common/js/base'
 import 'common/css/index'
+import vueLayLoad from 'vue-lazyload';
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -14,6 +15,9 @@ Vue.config.productionTip = false
 //   template: '<App/>',
 //   components: { App }
 // })
+Vue.use(vueLayLoad, {
+  loading: require('common/img/logo@3x.png')
+})
 new Vue({
   el: '#app',
   router,

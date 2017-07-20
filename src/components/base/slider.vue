@@ -1,5 +1,5 @@
 <template>
-  <div class="swiper-container">
+  <div class="swiper-container" :class="wrap">
       <slot></slot>
   </div>
 </template>
@@ -11,18 +11,23 @@
             return {}
         },
         props:{
-          autoPlay:{
-            type:Number,
-            default:3000
-          }
+          slideParams:{
+            type:Object,
+            default:()=>{
+                return {
+                  loop: true,
+                  pagination: '.swiper-pagination',
+                  autoplay:3000
+                }
+            }
+          },
+          wrap:String,
+          default:'swiper-container'
         },
         methods: {
-            init(){
-              var mySwiper = new Swiper ('.swiper-container', {
-                loop: true,
-                pagination: '.swiper-pagination',
-                autoplay:this.autoPlay
-              })
+            init(s){
+                console.log(s)
+              var mySwiper = new Swiper ('.swiper-container', this.slideParams)
             }
         },
     }
