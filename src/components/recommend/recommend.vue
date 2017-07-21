@@ -34,6 +34,9 @@
         recommendList:[],
       }
     },
+    updated(){
+      _this.$refs.scrollContent.init();
+    },
     mounted(){
       this.init();
     },
