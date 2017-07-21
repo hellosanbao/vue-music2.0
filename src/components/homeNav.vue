@@ -26,6 +26,7 @@
 <style scoped lang="scss" rel="stylesheet/scss">
   @import "~common/css/base";
     .nav-content{
+      background-color: #fff;
       height: 4rem;
       ul{
         @extend .flex-warp;

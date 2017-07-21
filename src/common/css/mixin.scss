@@ -1,5 +1,5 @@
 //1像素边框
-@mixin border-1px-b($dir:top,$border-color:#d7d7d7){
+@mixin border-1px-b($dir:bottom,$border-color:#d7d7d7){
   position: relative;
   &:after{
     content: '';

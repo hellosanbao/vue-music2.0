@@ -39,6 +39,7 @@ export default {
     @extend .flex-warp;
     @extend .flex-middle;
     padding: 1rem;
+    box-sizing: border-box;
     .logo{
       @extend .flex-warp;
       @extend .flex-middle;
@@ -47,7 +48,7 @@ export default {
       img{
         display:block;
         vertical-align: middle;
-        width: 3.5rem;
+        height: 3.5rem;
       }
     }
     .logo-name{

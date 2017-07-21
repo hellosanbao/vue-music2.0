@@ -31,14 +31,6 @@
     mounted(){
       this.init();
     },
-    filters:{
-      formatNum(val){
-        if(val>1000){
-            val=(val/10000).toFixed(2)+'万';
-        }
-        return val
-      }
-    },
     methods: {
       init(){
         this.getHotRecommend();
@@ -102,7 +94,7 @@
     width: 100%;
     @extend .flex-break;
     .item {
-      margin-top: 1rem;
+      margin-bottom: 1rem;
       width: 32.8%;
       .cover {
         padding-top: 100%;

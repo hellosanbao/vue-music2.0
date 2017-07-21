@@ -1,15 +1,18 @@
 <template>
   <div class="recommend">
-    <slider ref="slide" wrap="topBanner">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="banner in bannerList">
-          <img :src="banner.pic" alt="">
+    <scroll ref="scrollContent">
+      <slider ref="slide" wrap="topBanner" class="slider-wrap">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="banner in bannerList">
+            <img :src="banner.pic" alt="">
+          </div>
         </div>
-      </div>
-      <div class="swiper-pagination"></div>
-    </slider>
-    <hot-recommend></hot-recommend>
-    <hot-recommend-mv ref='mvScroll' :datas="mvRecList"></hot-recommend-mv>
+        <div class="swiper-pagination"></div>
+      </slider>
+      <hot-recommend></hot-recommend>
+      <hot-recommend-mv ref='mvScroll' :datas="mvRecList"></hot-recommend-mv>
+      <recommend-list :recommendList="recommendList"></recommend-list>
+    </scroll>
   </div>
 </template>
 
@@ -17,15 +20,18 @@
   import slider from 'components/base/slider';
   import jsonp from 'common/js/jsonp';
   import {recommend, options} from '@/apiConfig';
+  import scroll from 'components/base/scroll';
   import hotRecommend from 'components/recommend/hotRecommend';
   import hotRecommendMv from 'components/recommend/hotRecommendMv';
-  import $ from 'jquery';
+  import recommendList from 'components/recommend/recommendList';
+  import {mapState,mapMutations,mapActions,mapGetters} from 'vuex';
   export default{
     data(){
       return {
         bannerList: [],
         mvRecList: [],
-        hmList:[]
+        hmList:[],
+        recommendList:[],
       }
     },
     mounted(){
@@ -45,25 +51,19 @@
           tpl:'v12',
           page:'other',
           rnd:rnd,
-          jsonpCallback:'GetRecomListCallback'+rnd,
           loginUin:0,
           hostUin:0,
         })
-
-        $.ajax({
-          url:url,
-          data:data,
-          dataType:'jsonp',
-          jsonp:'jsonpCallback',
-          success:function(res){
-            _this.hmList=res.data.hotdiss.list.slice(0,6);
-            _this.bannerList=res.data.focus;
-            _this.mvRecList=res.data.shoubomv.all;
-            setTimeout(() => {
-              _this.$refs.slide.init();
-              _this.$refs.mvScroll.init();
-            }, 20)
-          }
+        jsonp(url,data,options).then((res)=>{
+          _this.hmList=res.data.hotdiss.list.slice(0,6);
+          _this.bannerList=res.data.focus;
+          _this.mvRecList=res.data.shoubomv.all;
+          _this.recommendList=res.data.toplist;
+          setTimeout(() => {
+            _this.$refs.slide.init();
+            _this.$refs.mvScroll.init();
+            _this.$refs.scrollContent.init();
+          }, 100)
         })
 
       }
@@ -71,15 +71,19 @@
     components: {
       slider,
       hotRecommend,
-      hotRecommendMv
+      hotRecommendMv,
+      recommendList,
+      scroll
     }
   }
 </script>
 
 <style scoped lang="scss" rel="stylesheet/scss">
   @import "../../../node_modules/swiper/dist/css/swiper.min.css";
-
   .swiper-slide img {
     width: 100%;
+  }
+  .slider-wrap{
+    margin-bottom: 1rem;
   }
 </style>

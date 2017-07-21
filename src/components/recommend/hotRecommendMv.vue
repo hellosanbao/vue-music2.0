@@ -22,14 +22,6 @@
   import slider from 'components/base/slider';
   export default{
     props     : ['datas'],
-    filters:{
-      formatNum(val){
-        if(val>10000){
-          val=(val/10000).toFixed(2)+'万';
-        }
-        return val
-      }
-    },
     methods   : {
       init(){
         var mySwiper = new Swiper('.mvScroll', {
