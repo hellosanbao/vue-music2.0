@@ -6,13 +6,16 @@
           <div class="avat">
             <img v-lazy = "top.picUrl" alt = "">
           </div>
-          <div class="nr flex-con">{{top.topTitle}}</div>
-          <ul class="song-list">
-            <li class="song-item" v-for="song in top.songList">
-              <span>{{song.songname}}</span>
-              <span>{{song.singername}}</span>
-            </li>
-          </ul>
+          <div class="nr flex-con">
+            <p class="title">{{top.topTitle}}</p>
+            <ul class="song-list">
+              <li class="song-item ellipsis" v-for="song in top.songList">
+                <span class="sname">{{song.songname}}</span>
+                <span class="author">{{song.singername}}</span>
+              </li>
+            </ul>
+          </div>
+
         </li>
       </ul>
     </scroll>
@@ -62,16 +65,40 @@
 </script>
 
 <style scoped lang="scss" rel="stylesheet">
+  @import "~common/css/base";
   .list-group{
-    padding: 1rem 1rem 0 1rem;
+    background-color: $light-bg-color;
+    padding: 1rem;
     .item {
+      background-color: $def-bg-color;
       margin-bottom: 1rem;
+      border-radius: 0.3rem;
+      overflow: hidden;
       .avat{
         width: 10rem;
         height: 10rem;
         img{
           width: 100%;
           height: 100%;
+        }
+      }
+      .nr{
+        padding: 0 1rem;
+        .title{
+          font-weight: 500;
+          font-size: $font-size-large;
+          color: $color-text-v;
+          padding-bottom: 0.5rem;
+        }
+        .song-list{
+          .song-item{
+            line-height: 2rem;
+            font-size: $font-size-big;
+            .author{
+              font-size: $font-size-medium-x;
+              color: $color-text-d;
+            }
+          }
         }
       }
     }

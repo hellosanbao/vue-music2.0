@@ -35,7 +35,7 @@
       }
     },
     updated(){
-      _this.$refs.scrollContent.init();
+      this.$refs.scrollContent.init();
     },
     mounted(){
       this.init();
