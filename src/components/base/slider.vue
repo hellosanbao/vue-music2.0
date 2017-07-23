@@ -30,7 +30,12 @@
     },
     methods: {
       init(){
-        this.swiper = new Swiper(`.${this.wrap}`, this.slideParams)
+          var _this=this;
+        this.swiper = new Swiper(`.${this.wrap}`, Object.assign({},this.slideParams,{
+          onSlideChangeStart: function (swiper) {
+              _this.$emit('SlideChangeStart',swiper);
+          }
+        }))
       },
       slideTo(){
         this.swiper.slideTo.apply(this.swiper,arguments);
