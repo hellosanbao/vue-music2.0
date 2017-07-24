@@ -1,5 +1,5 @@
 <template>
-    <list-view :datalist="recommendList"></list-view>
+    <list-view :datalist="recommendList" :pic="pic"></list-view>
 </template>
 
 <script>
@@ -9,7 +9,8 @@
     export default{
         data(){
             return {
-                recommendList:[]
+                recommendList:[],
+                pic:''
             }
         },
         mounted(){
@@ -32,6 +33,7 @@
                   needNewCode:0,
                 })
               jsonp(url, data, {param:'callback',prefix:'callback'}).then((res) => {
+                this.pic=`background:url(${res.cdlist[0].logo}) no-repeat center top/100% auto #fff`
                 var arr=[];
                 res.cdlist[0].songlist.forEach((el)=>{
                     arr.push({

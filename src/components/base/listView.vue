@@ -7,7 +7,7 @@
         <i class = "iconfont"></i>
       </div>
     </div>
-    <div class = "list-cover" ref = "listCover" :style = "cover"></div>
+    <div class = "list-cover" ref = "listCover" :style = "pic"></div>
     <div class = "head-tab flex-warp" ref = "headTab" v-show="false"></div>
     <scroll :top = "top" ref = "scroll"
             class = "scroll-singerSongList"
@@ -66,7 +66,7 @@
             type:Array,
             default:[]
         },
-        cover:{
+        pic:{
             type:String,
             default:''
         }
