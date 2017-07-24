@@ -13,6 +13,9 @@
       <hot-recommend-mv ref='mvScroll' :datas="mvRecList"></hot-recommend-mv>
       <recommend-list :recommendList="recommendList"></recommend-list>
     </scroll>
+    <transition name="slideInRight">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -88,5 +91,15 @@
   }
   .slider-wrap{
     margin-bottom: 1rem;
+  }
+  .slideInRight-enter-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-leave-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-enter, .slideInRight-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(100%);
   }
 </style>

@@ -2,7 +2,7 @@
   <div class = "hotrecommend">
     <div class="ret-title">热门歌单</div>
     <ul class = "hm-list">
-      <li class = "item" v-for="hm in hmList">
+      <router-link tag="li" :to="'/recommend/'+hm.dissid" :key="hm.dissid" class = "item" v-for="hm in hmList">
         <div class = "cover">
           <img v-lazy = "hm.imgurl" alt = "">
           <div class = "nr flex-warp flex-between">
@@ -11,7 +11,7 @@
           </div>
         </div>
         <p class = "desc">{{hm.dissname}}</p>
-      </li>
+      </router-link>
     </ul>
 
   </div>

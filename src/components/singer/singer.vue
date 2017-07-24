@@ -6,7 +6,7 @@
           <div class="list-group" v-for="(res,index) in formatSingerList" ref="listGroup">
             <div class="list-group-title" ref="listTil">{{res.til}}</div>
             <ul class="list-group-item">
-              <router-link tag="li" :to="'singer/'+singer.Fsinger_mid" :key="singer.Fsinger_mid" class="item flex-warp flex-middle" v-for="singer in res.list">
+              <router-link tag="li" :to="'/singer/'+singer.Fsinger_mid" :key="singer.Fsinger_mid" class="item flex-warp flex-middle" v-for="singer in res.list">
                 <div class="avat"><img v-lazy="picUrl(singer)" alt=""></div>
                 <div class="name">{{singer.Fsinger_name}}</div>
               </router-link>
