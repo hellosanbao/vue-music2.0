@@ -37,6 +37,12 @@ export default new Router({
     {
       path:'/hots',
       component:hots,
+      children: [
+        {
+          path: ':pid',
+          component: hotDetail
+        }
+      ]
     },
     {
       path:'/',

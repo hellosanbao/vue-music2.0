@@ -2,7 +2,7 @@
   <div class="hots">
     <scroll ref="topSongList">
       <ul class="list-group">
-        <router-link tag="li" :to="'/recommend/hot/'+top.id" class="item flex-warp flex-middle" v-for="top in topList">
+        <router-link tag="li" :to="'/hots/'+top.id" class="item flex-warp flex-middle" v-for="top in topList">
           <div class="avat">
             <img v-lazy = "top.picUrl" alt = "">
           </div>
@@ -15,10 +15,12 @@
               </li>
             </ul>
           </div>
-
         </router-link>
       </ul>
     </scroll>
+    <transition name="slideInRight">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 
@@ -105,4 +107,14 @@
 
   }
 
+  .slideInRight-enter-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-leave-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-enter, .slideInRight-leave-to
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    transform: translateX(100%);
+  }
 </style>

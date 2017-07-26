@@ -1,5 +1,5 @@
 <template>
-  <list-view :datalist="recommendList" :pic="pic"></list-view>
+  <list-view :datalist="recommendList" :pic="pic" :title="title"></list-view>
 </template>
 
 <script>
@@ -10,7 +10,8 @@
     data(){
       return {
         recommendList:[],
-        pic:''
+        pic:'',
+        title:''
       }
     },
     mounted(){
@@ -39,7 +40,8 @@
           _:1500946493824,
         })
         jsonp(url, data, {param:'jsonpCallback',prefix:'callback'}).then((res) => {
-          this.pic=`background:url(${res.topinfo.pic}) no-repeat center top/100% auto #fff`
+          this.pic=`background:url(${res.topinfo.pic_v12}) no-repeat center top/100% auto #fff`;
+          this.title=res.topinfo.ListName;
           var arr=[];
           res.songlist.forEach((el)=>{
             arr.push({

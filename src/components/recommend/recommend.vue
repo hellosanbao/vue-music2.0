@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="recommend" v-show="isLoadingEnd">
     <scroll ref="scrollContent">
       <slider ref="slide" wrap="topBanner" class="slider-wrap">
         <div class="swiper-wrapper">
@@ -35,6 +35,7 @@
         mvRecList: [],
         hmList:[],
         recommendList:[],
+        isLoadingEnd:false
       }
     },
 //    updated(){
@@ -65,11 +66,15 @@
           _this.bannerList=res.data.focus;
           _this.mvRecList=res.data.shoubomv.all;
           _this.recommendList=res.data.toplist;
-          setTimeout(() => {
-            _this.$refs.slide.init();
-            _this.$refs.mvScroll.init();
-            _this.$refs.scrollContent.init();
-          }, 100)
+          _this.isLoadingEnd=true;
+          _this.$nextTick(function(){
+            setTimeout(() => {
+              _this.$refs.slide.init();
+              _this.$refs.mvScroll.init();
+              _this.$refs.scrollContent.init();
+            }, 200)
+          })
+
         })
 
       }
@@ -86,8 +91,14 @@
 
 <style scoped lang="scss" rel="stylesheet/scss">
   @import "../../../node_modules/swiper/dist/css/swiper.min.css";
+  .swiper-slide{
+    height: 15rem;
+  }
   .swiper-slide img {
     width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    display: block;
   }
   .slider-wrap{
     margin-bottom: 1rem;
