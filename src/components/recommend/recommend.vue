@@ -14,7 +14,7 @@
       <recommend-list :recommendList="recommendList"></recommend-list>
     </scroll>
     <transition name="slideInRight">
-      <router-view></router-view>
+        <router-view></router-view>
     </transition>
   </div>
 </template>
@@ -37,9 +37,9 @@
         recommendList:[],
       }
     },
-    updated(){
-      this.$refs.scrollContent.init();
-    },
+//    updated(){
+//      this.$refs.scrollContent.refresh();
+//    },
     mounted(){
       this.init();
     },

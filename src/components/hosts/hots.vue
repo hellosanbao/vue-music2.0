@@ -2,7 +2,7 @@
   <div class="hots">
     <scroll ref="topSongList">
       <ul class="list-group">
-        <li class="item flex-warp flex-middle" v-for="top in topList">
+        <router-link tag="li" :to="'/recommend/hot/'+top.id" class="item flex-warp flex-middle" v-for="top in topList">
           <div class="avat">
             <img v-lazy = "top.picUrl" alt = "">
           </div>
@@ -16,7 +16,7 @@
             </ul>
           </div>
 
-        </li>
+        </router-link>
       </ul>
     </scroll>
   </div>

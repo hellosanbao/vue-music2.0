@@ -5,6 +5,7 @@ import singer from 'components/singer/singer.vue'
 import hots from 'components/hosts/hots.vue'
 import singerSongList from 'components/singerSongList.vue'
 import recommendDetail from 'components/recommend/recommendDetail.vue'
+import hotDetail from 'components/hosts/hotDetail.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -14,8 +15,12 @@ export default new Router({
       component: recommend,
       children: [
         {
-          path: ':id',
+          path: 'gd/:id',
           component: recommendDetail
+        },
+        {
+          path: 'hot/:pid',
+          component: hotDetail
         }
       ]
     },
@@ -31,7 +36,7 @@ export default new Router({
     },
     {
       path:'/hots',
-      component:hots
+      component:hots,
     },
     {
       path:'/',

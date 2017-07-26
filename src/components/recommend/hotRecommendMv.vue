@@ -3,7 +3,7 @@
     <div class="ret-title">热门推荐</div>
     <div class="swiper-container mvScroll">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="hot in datas">
+        <div class="swiper-slide" v-for="hot in datas" @click="jumpMv(hot.vid)">
           <div class="coverImg">
             <img v-lazy="hot.picurl" alt="" class="coverImg">
             <p class="playnum"><i class="iconfont icon-play-song"></i>{{hot.listennum | formatNum}}</p>
@@ -29,6 +29,9 @@
           freeMode     : true,
           spaceBetween : 10,
         })
+      },
+      jumpMv(vid){
+          window.location.href=`https://y.qq.com/w/mv.html?ADTAG=newyqq.mv&vid=${vid}`
       }
     },
     components: {

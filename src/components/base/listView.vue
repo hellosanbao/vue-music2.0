@@ -64,7 +64,9 @@
     props:{
         datalist:{
             type:Array,
-            default:[]
+            default(){
+                return [];
+            }
         },
         pic:{
             type:String,

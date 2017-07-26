@@ -2,7 +2,7 @@
   <div class = "recommendList">
     <div class="ret-title">排行榜</div>
     <ul class="list">
-      <li v-for="rec in recommendList" class="flex-warp item flex-middle">
+      <router-link tag="li" :to="'/recommend/hot/'+rec.topID" v-for="rec in recommendList" class="flex-warp item flex-middle">
         <div class="avat"><img v-lazy = "rec.pic" alt = ""></div>
         <div class="nr flex-con">
           <h3>{{rec.ListName}}</h3>
@@ -11,7 +11,7 @@
           </div>
         </div>
         <div class="time">{{rec.showtime}}</div>
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>
