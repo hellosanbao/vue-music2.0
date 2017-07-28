@@ -179,12 +179,15 @@
           }
 
           //下一个til把当前til顶上去
-          if(-newY<h2 && h2+newY<=this.$refs.curTil.clientHeight){
-            topTilFixed = -this.$refs.curTil.clientHeight-(-newY-h2);
-          }
-          if(-newY==heightlist[this.mapObj.curIndex+1]){
-            topTilFixed=0;
-          }
+          //考虑到性能，暂时放弃
+//          if(-newY<h2 && h2+newY<=this.$refs.curTil.clientHeight){
+//            topTilFixed = -this.$refs.curTil.clientHeight-(-newY-h2);
+//          }
+//          var dif=-newY-heightlist[this.mapObj.curIndex+1];
+//          if(dif>-4.5 && dif<0){
+//            this.mapObj.curIndex = i+1;
+//            topTilFixed=0;
+//          }
         })
         // 当滚动到顶部，newY>0
         if (newY > 0) {
@@ -217,7 +220,7 @@
       width: 100%;
       color: $primary-text-color;
       background-color: #f0f0f0;
-      line-height: 2rem;
+      line-height: 2.5rem;
       text-indent: 1rem;
       z-index: 9998;
     }
@@ -229,7 +232,7 @@
       .list-group-title {
         color: $primary-text-color;
         background-color: #f0f0f0;
-        line-height: 2rem;
+        line-height: 2.5rem;
         text-indent: 1rem;
       }
       .item {

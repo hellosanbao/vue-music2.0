@@ -4,6 +4,7 @@
       <m-header></m-header>
       <home-nav></home-nav>
     </div>
+    <player></player>
     <keep-alive>
       <router-view id="main-content"></router-view>
     </keep-alive>
@@ -14,11 +15,14 @@
 <script>
   import mHeader from 'components/header';
   import homeNav from 'components/homeNav';
+  import player from 'components/player/player.vue';
+
 export default {
   name: 'app',
   components:{
     mHeader,
-    homeNav
+    homeNav,
+    player
   }
 }
 </script>

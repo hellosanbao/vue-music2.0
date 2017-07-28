@@ -29,7 +29,7 @@
             <div class = "swiper-slide">
               <div class = "list-content">
                 <ul class = "list">
-                  <li class = "item flex-warp flex-middle" v-for = "(song,index) in songList">
+                  <li class = "item flex-warp flex-middle" v-for = "(song,index) in songList" @click="selectPlaySong">
                     <div>
                       <div class = "name">{{song.musicData.songname}}</div>
                       <div class = "author"><span v-for = "singer in song.musicData.singer">{{singer.name}} </span>
@@ -41,7 +41,7 @@
             </div>
             <div class = "swiper-slide">
               <ul class = "mv-list">
-                <li class = "item flex-warp flex-middle" v-for = "mv in mvList">
+                <li class = "item flex-warp flex-middle" v-for = "mv in mvList" @click="jumpMv(mv.vid)">
                   <div class = "avat">
                     <img v-lazy = "mv.pic" alt = "">
                     <p class="playnum"><i class="iconfont icon-play-song"></i>{{mv.listenCount | formatNum}}</p>
@@ -67,6 +67,7 @@
   import {fonts, prefixStyle} from 'common/js/base';
   import {recommend, options} from '@/apiConfig';
   import $ from 'jquery';
+  import {mapMutations} from 'vuex';
 
   const transform = prefixStyle('transform');
   const backdrop = prefixStyle('filter');
@@ -92,6 +93,7 @@
       this.init();
     },
     methods   : {
+      ...mapMutations(['selectPlaySong']),
       init(){
         this.getSongList();
         this.getMvList();
@@ -144,6 +146,9 @@
           }
         })
       },
+      jumpMv(vid){
+        window.location.href=`https://y.qq.com/w/mv.html?ADTAG=newyqq.mv&vid=${vid}`
+      },
       getMvList(){
         let url = 'https://c.y.qq.com/mv/fcgi-bin/fcg_singer_mv.fcg'
         let data = Object.assign({}, recommend, {
@@ -180,7 +185,8 @@
         if (newVal > 0) {
           var blur = -opactiy * 20;
           var rote = 1 + (-opactiy);
-          this.$refs.listCover.style[backdrop] = `blur(${blur}px)`;
+          //考虑到流畅度暂时放弃
+//          this.$refs.listCover.style[backdrop] = `blur(${blur}px)`;
           this.$refs.listCover.style[transform] = `scale(${rote})`;
         }
       }

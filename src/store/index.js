@@ -3,21 +3,21 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 const state = {
-  flae: false
+  fullPlay: false
 }
 const mutations = {
-  cgflae: function (stste) {
-    stste.flae = !stste.flae;
-    console.log(1)
+  selectPlaySong: function (state) {
+    state.fullPlay = true;
+    console.log(state)
   }
 }
 const actions = {
   dispatchcgflae({commit}){
-    commit('cgflae');
+    commit('selectPlaySong');
   }
 }
 const getters = {
-  resflae(state){
+  resfullPlay(state){
     return state.flae;
   }
 }

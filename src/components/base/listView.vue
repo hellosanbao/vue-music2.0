@@ -1,44 +1,44 @@
 <template>
-  <div class = "singerSongList">
-    <div class = "head" ref = "head">
-      <div class = "head-content flex-warp flex-middle">
-        <i class = "iconfont icon-Prev" onclick = "history.go(-1)"></i>
-        <p class = "til flex-con">jhbks</p>
-        <i class = "iconfont"></i>
+  <div class="singerSongList">
+    <div class="head" ref="head">
+      <div class="head-content flex-warp flex-middle">
+        <i class="iconfont icon-Prev" onclick="history.go(-1)"></i>
+        <p class="til flex-con">{{title}}</p>
+        <i class="iconfont"></i>
       </div>
     </div>
-    <div class = "list-cover" ref = "listCover" :style = "pic"></div>
-    <div class = "head-tab flex-warp" ref = "headTab" v-show="false"></div>
-    <scroll :top = "top" ref = "scroll"
-            class = "scroll-singerSongList"
-            @scroll = "centerScroll"
-            :lisenScroll = 'lisenScroll'
-            :class = "{hide:false}">
+    <div class="list-cover" ref="listCover" :style="pic"></div>
+    <div class="head-tab flex-warp" ref="headTab" v-show="false"></div>
+    <scroll :top="top" ref="scroll"
+            class="scroll-singerSongList"
+            @scroll="centerScroll"
+            :lisenScroll='lisenScroll'
+            :class="{hide:false}">
       <!--<div class="fixed-cover"></div>-->
-      <div style = "background-color: #fff">
+      <div style="background-color: #fff">
         <div class="play-rand"><i class="iconfont icon-play-song"></i>随机播放全部</div>
-          <div class = "swiper-wrapper">
-            <div class = "swiper-slide">
-              <div class = "list-content">
-                <ul class = "list">
-                  <li class = "item" v-for="data in datalist">
-                    <div class="flex-warp flex-middle">
-                      <div class="flex-con">
-                        <div class = "name">{{data.songname}}</div>
-                        <div class = "author"><span>{{data.author}}</span></div>
-                      </div>
-                      <div class="list-edit"><i class="iconfont icon-gengduo"></i></div>
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="list-content">
+              <ul class="list">
+                <li class="item" v-for="data in datalist">
+                  <div class="flex-warp flex-middle">
+                    <div class="flex-con">
+                      <div class="name">{{data.songname}}</div>
+                      <div class="author"><span>{{data.author}}</span></div>
                     </div>
-                    <div class="edit-warp flex-warp flex-middle" v-if="false">
-                      <div class="edit-item"><i class="iconfont icon-add"></i> <br>添加</div>
-                      <div class="edit-item"><i class="iconfont icon-aixin"></i> <br>收藏</div>
-                      <div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                    <div class="list-edit"><i class="iconfont icon-gengduo"></i></div>
+                  </div>
+                  <div class="edit-warp flex-warp flex-middle" v-if="false">
+                    <div class="edit-item"><i class="iconfont icon-add"></i> <br>添加</div>
+                    <div class="edit-item"><i class="iconfont icon-aixin"></i> <br>收藏</div>
+                    <div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>
+                  </div>
+                </li>
+              </ul>
             </div>
           </div>
+        </div>
       </div>
     </scroll>
   </div>
@@ -61,37 +61,41 @@
         singerName  : '',
       }
     },
-    props:{
-        datalist:{
-            type:Array,
-            default(){
-                return [];
-            }
-        },
-        pic:{
-            type:String,
-            default:''
+    props     : {
+      datalist: {
+        type: Array,
+        default(){
+          return [];
         }
+      },
+      pic     : {
+        type   : String,
+        default: ''
+      },
+      title   : {
+        type   : String,
+        default: 'QQ音乐排行榜'
+      }
     },
     updated(){
       this.$refs.scroll.refresh();
     },
     mounted(){
-        this.$nextTick(function(){
-          this.init();
-        })
+      this.$nextTick(function () {
+        this.init();
+      })
     },
     methods   : {
       init(){
-        this.top=`${this.$refs.listCover.clientHeight}px`;
+        this.top = `${this.$refs.listCover.clientHeight}px`;
         fonts(() => {
           this.$refs.headTab.style.top = `${parseInt(this.top) - this.$refs.headTab.clientHeight}px`;
         });
-        setTimeout(()=>{
+        setTimeout(() => {
           fonts(() => {
             this.$refs.scroll.init();
           });
-        },200)
+        }, 200)
 
       },
       centerScroll(pos){
@@ -109,7 +113,8 @@
         if (newVal > 0) {
           var blur = -opactiy * 20;
           var rote = 1 + (-opactiy);
-          this.$refs.listCover.style[backdrop] = `blur(${blur}px)`;
+          //考虑到流畅度暂时放弃
+//          this.$refs.listCover.style[backdrop] = `blur(${blur}px)`;
           this.$refs.listCover.style[transform] = `scale(${rote})`;
         }
       }
@@ -120,7 +125,7 @@
   }
 </script>
 
-<style scoped lang = "scss" rel = "stylesheet/scss">
+<style scoped lang="scss" rel="stylesheet/scss">
   @import "~common/css/base";
   @import "~common/css/mixin";
   @import "../../../node_modules/swiper/dist/css/swiper.min.css";
@@ -158,7 +163,7 @@
       position: relative;
       width: 100%;
       padding-top: 80%;
-      background: url("../../common/img/logo@3x.png") no-repeat center top/100% auto #fff;
+      background: url("../../common/img/logo@3x.png") no-repeat center/100% auto #fff;
       /*z-index: 10;*/
     }
     .hide {
@@ -200,17 +205,17 @@
     }
     .scroll-singerSongList {
       /*background-color: #fff;*/
-      .play-rand{
+      .play-rand {
         position: absolute;
-        left:50%;
-        top:-4rem;
+        left: 50%;
+        top: -4rem;
         transform: translateX(-50%);
         color: $primary-text-color;
         font-size: $font-size-big-x;
-        border:1px solid  $primary-text-color;
+        border: 1px solid $primary-text-color;
         border-radius: 1.5rem;
         padding: 0.2rem 1rem;
-        .iconfont{
+        .iconfont {
           margin-right: 0.5rem;
         }
       }
@@ -224,19 +229,19 @@
             padding-right: 1rem;
             margin-left: 1rem;
             position: relative;
-            .edit-warp{
+            .edit-warp {
               height: 5rem;
               background-color: #fff;
               position: absolute;
               left: -1rem;
-              top:100%;
-              width:calc(100% + 1rem);
+              top: 100%;
+              width: calc(100% + 1rem);
               z-index: 10;
-              box-shadow: 0 1px 10px 1px rgba(0,0,0,.1);
-              .edit-item{
+              box-shadow: 0 1px 10px 1px rgba(0, 0, 0, .1);
+              .edit-item {
                 width: 5rem;
                 text-align: center;
-                color:$color-text-i;
+                color: $color-text-i;
               }
             }
             .name {
@@ -253,7 +258,7 @@
       }
       .mv-list {
         .item {
-          padding:0.5rem 1rem ;
+          padding: 0.5rem 1rem;
           .avat {
             position: relative;
             width: 10rem;
@@ -262,27 +267,27 @@
               width: 100%;
               height: 100%;
             }
-            .playnum{
+            .playnum {
               position: absolute;
               right: 1rem;
-              bottom:0;
+              bottom: 0;
               height: 2rem;
               line-height: 2rem;
               z-index: 99;
               color: #fff;
-              .iconfont{
+              .iconfont {
                 font-size: $font-size-big;
                 margin-right: 0.3rem;
               }
             }
           }
-          .nr{
+          .nr {
             padding: 0 1rem;
-            .title{
+            .title {
               font-size: $font-size-big-x;
               color: $color-text-v;
             }
-            .name{
+            .name {
               font-size: $font-size-big;
               color: $color-text-l;
               margin-top: 0.5rem;
