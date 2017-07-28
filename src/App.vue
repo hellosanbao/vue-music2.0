@@ -28,7 +28,7 @@ export default {
       position: fixed;
       left: 0;
       top:0;
-      width:  100%;
+      width: 100%;
       z-index: 100;
     }
   #main-content{
