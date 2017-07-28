@@ -29,7 +29,7 @@
             <div class = "swiper-slide">
               <div class = "list-content">
                 <ul class = "list">
-                  <li class = "item flex-warp flex-middle" v-for = "(song,index) in songList" @click="selectPlaySong">
+                  <li class = "item flex-warp flex-middle" v-for = "(song,index) in songList" @click="dispatchcgflae(song)">
                     <div>
                       <div class = "name">{{song.musicData.songname}}</div>
                       <div class = "author"><span v-for = "singer in song.musicData.singer">{{singer.name}} </span>
@@ -67,7 +67,7 @@
   import {fonts, prefixStyle} from 'common/js/base';
   import {recommend, options} from '@/apiConfig';
   import $ from 'jquery';
-  import {mapMutations} from 'vuex';
+  import {mapMutations,mapActions} from 'vuex';
 
   const transform = prefixStyle('transform');
   const backdrop = prefixStyle('filter');
@@ -93,7 +93,7 @@
       this.init();
     },
     methods   : {
-      ...mapMutations(['selectPlaySong']),
+      ...mapActions(['dispatchcgflae']),
       init(){
         this.getSongList();
         this.getMvList();
