@@ -34,14 +34,7 @@
                 })
               jsonp(url, data, {param:'callback',prefix:'callback'}).then((res) => {
                 this.pic=`background:url(${res.cdlist[0].logo}) no-repeat center top/100% auto #fff`
-                var arr=[];
-                res.cdlist[0].songlist.forEach((el)=>{
-                    arr.push({
-                      songname:el.songname,
-                      author:el.songorig,
-                    })
-                })
-                  this.recommendList=this.recommendList.concat(arr);
+                  this.recommendList=this.recommendList.concat(res.cdlist[0].songlist);
               })
 
             }

@@ -1,54 +1,56 @@
 <template>
-  <div class = "singerSongList">
-    <div class = "head" ref = "head">
-      <div class = "head-content flex-warp flex-middle">
-        <i class = "iconfont icon-Prev" onclick = "history.go(-1)"></i>
-        <p class = "til flex-con">{{singerName}}</p>
-        <i class = "iconfont"></i>
+  <div class="singerSongList">
+    <div class="head" ref="head">
+      <div class="head-content flex-warp flex-middle">
+        <i class="iconfont icon-Prev" onclick="history.go(-1)"></i>
+        <p class="til flex-con">{{singerName}}</p>
+        <i class="iconfont"></i>
       </div>
     </div>
-    <div class = "list-cover" ref = "listCover" :style = "singerPic"></div>
-    <div class = "head-tab flex-warp" ref = "headTab">
-      <div class = "item flex-con" :class = "{active:slideIndex==0}" @click = "change(0)">
+    <div class="list-cover" ref="listCover" :style="singerPic"></div>
+    <div class="head-tab flex-warp" ref="headTab">
+      <div class="item flex-con" :class="{active:slideIndex==0}" @click="change(0)">
         <span>歌曲</span>
       </div>
-      <div class = "item flex-con" :class = "{active:slideIndex==1}" @click = "change(1)">
+      <div class="item flex-con" :class="{active:slideIndex==1}" @click="change(1)">
         <span>mv</span>
       </div>
     </div>
-    <scroll :top = "top" ref = "scroll"
-            class = "scroll-singerSongList"
-            @scroll = "centerScroll"
-            :lisenScroll = 'lisenScroll'
-            :class = "{hide:scrollHidden}"
+    <scroll :top="top" ref="scroll"
+            class="scroll-singerSongList"
+            @scroll="centerScroll"
+            :lisenScroll='lisenScroll'
+            :class="{hide:scrollHidden}"
     >
       <!--<div class="fixed-cover"></div>-->
-      <div style = "background-color: #fff">
-        <slider ref = "slide" wrap = "list-tab" @SlideChangeStart = "slideChange" :slideParams = "slideParam">
-          <div class = "swiper-wrapper">
-            <div class = "swiper-slide">
-              <div class = "list-content">
-                <ul class = "list">
-                  <li class = "item flex-warp flex-middle" v-for = "(song,index) in songList" @click="dispatchcgflae(song)">
+      <div style="background-color: #fff">
+        <slider ref="slide" wrap="list-tab" @SlideChangeStart="slideChange" :slideParams="slideParam">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="list-content">
+                <ul class="list">
+                  <li class="item flex-warp flex-middle"
+                      v-for="(song,index) in songList"
+                      @click="selectPlay(song,songList,index)">
                     <div>
-                      <div class = "name">{{song.musicData.songname}}</div>
-                      <div class = "author"><span v-for = "singer in song.musicData.singer">{{singer.name}} </span>
+                      <div class="name">{{song.musicData.songname}}</div>
+                      <div class="author"><span v-for="singer in song.musicData.singer">{{singer.name}} </span>
                       </div>
                     </div>
                   </li>
                 </ul>
               </div>
             </div>
-            <div class = "swiper-slide">
-              <ul class = "mv-list">
-                <li class = "item flex-warp flex-middle" v-for = "mv in mvList" @click="jumpMv(mv.vid)">
-                  <div class = "avat">
-                    <img v-lazy = "mv.pic" alt = "">
+            <div class="swiper-slide">
+              <ul class="mv-list">
+                <li class="item flex-warp flex-middle" v-for="mv in mvList" @click="jumpMv(mv.vid)">
+                  <div class="avat">
+                    <img v-lazy="mv.pic" alt="">
                     <p class="playnum"><i class="iconfont icon-play-song"></i>{{mv.listenCount | formatNum}}</p>
                   </div>
                   <div class="nr flex-con">
-                      <p class="title ellipsis">{{mv.title}}</p>
-                      <p class="name ellipsis">{{mv.singer_name}}</p>
+                    <p class="title ellipsis">{{mv.title}}</p>
+                    <p class="name ellipsis">{{mv.singer_name}}</p>
                   </div>
                 </li>
               </ul>
@@ -64,10 +66,10 @@
   import scroll from 'components/base/scroll';
   import slider from 'components/base/slider';
   import jsonp from 'common/js/jsonp';
-  import {fonts, prefixStyle} from 'common/js/base';
+  import {fonts, prefixStyle, musicData} from 'common/js/base';
   import {recommend, options} from '@/apiConfig';
   import $ from 'jquery';
-  import {mapMutations,mapActions} from 'vuex';
+  import {mapMutations, mapActions} from 'vuex';
 
   const transform = prefixStyle('transform');
   const backdrop = prefixStyle('filter');
@@ -98,6 +100,14 @@
         this.getSongList();
         this.getMvList();
         this.$refs.slide.init();
+      },
+      selectPlay(songMsg, songList, index){
+        var song = musicData(songMsg);
+        var list = [];
+        songList.forEach((el) => {
+          list.push(musicData(el));
+        })
+        this.dispatchcgflae({songMsg: song, songList:list, index})
       },
       change(ind){
         this.$refs.slide.slideTo(ind, 300, true);
@@ -147,7 +157,7 @@
         })
       },
       jumpMv(vid){
-        window.location.href=`https://y.qq.com/w/mv.html?ADTAG=newyqq.mv&vid=${vid}`
+        window.location.href = `https://y.qq.com/w/mv.html?ADTAG=newyqq.mv&vid=${vid}`
       },
       getMvList(){
         let url = 'https://c.y.qq.com/mv/fcgi-bin/fcg_singer_mv.fcg'
@@ -164,7 +174,7 @@
           needNewCode: 0,
         })
         jsonp(url, data, options).then((res) => {
-          this.mvList=this.mvList.concat(res.data.list)
+          this.mvList = this.mvList.concat(res.data.list)
         })
 
       },
@@ -198,7 +208,7 @@
   }
 </script>
 
-<style scoped lang = "scss" rel = "stylesheet/scss">
+<style scoped lang="scss" rel="stylesheet/scss">
   @import "~common/css/base";
   @import "~common/css/mixin";
   @import "../../node_modules/swiper/dist/css/swiper.min.css";
@@ -302,7 +312,7 @@
       }
       .mv-list {
         .item {
-          padding:0.5rem 1rem ;
+          padding: 0.5rem 1rem;
           .avat {
             position: relative;
             width: 10rem;
@@ -311,27 +321,27 @@
               width: 100%;
               height: 100%;
             }
-            .playnum{
+            .playnum {
               position: absolute;
               right: 1rem;
-              bottom:0;
+              bottom: 0;
               height: 2rem;
               line-height: 2rem;
               z-index: 99;
               color: #fff;
-              .iconfont{
+              .iconfont {
                 font-size: $font-size-big;
                 margin-right: 0.3rem;
               }
             }
           }
-          .nr{
+          .nr {
             padding: 0 1rem;
-            .title{
+            .title {
               font-size: $font-size-big-x;
               color: $color-text-v;
             }
-            .name{
+            .name {
               font-size: $font-size-big;
               color: $color-text-l;
               margin-top: 0.5rem;

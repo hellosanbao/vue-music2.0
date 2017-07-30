@@ -9,7 +9,11 @@ const state = {
   //当前歌曲信息
   songMsg:{},
   //当前播放队列
-  songList:[]
+  songList:[],
+  //是否在播放歌曲
+  isPlay:false,
+  //当前播放歌曲在歌曲列表中的索引
+  curSongIndex:0,
 }
 
 //===================================================================mutations
@@ -19,22 +23,32 @@ const mutations = {
     state.songMsg=songMsg;
   },
   changeSongList(state,songlist){
-    this.songList=songlist;
+    state.songList=songlist;
   },
   fullPlay(state){
     state.fullPlay = true;
   },
   closeFullPlay(state){
     state.fullPlay = false;
+  },
+  changePlayeState(state,flg){
+    state.isPlay=flg;
+  },
+  changeCurSongIndex(state,index){
+    state.curSongIndex=index;
   }
 }
 
 //===================================================================actions
 const actions = {
   //选择歌曲
-  dispatchcgflae({commit},songMsg){
-    commit('selectPlaySong',songMsg);
+  dispatchcgflae({commit},{songMsg,songList,index}){
     commit('fullPlay');
+    commit('changePlayeState',true);
+    commit('selectPlaySong',songMsg);
+    commit('changeCurSongIndex',index);
+    commit('changeSongList',songList);
+
   }
 }
 

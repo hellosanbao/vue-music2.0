@@ -44,10 +44,7 @@
           this.title=res.topinfo.ListName;
           var arr=[];
           res.songlist.forEach((el)=>{
-            arr.push({
-              songname:el.data.songname,
-              author:el.data.songorig,
-            })
+            arr.push(el.data)
           })
           this.recommendList=this.recommendList.concat(arr);
         })
