@@ -35,7 +35,7 @@
 //扩展点击区域
 @mixin extend-click{
   position: relative;
-  &:before{
+  &:after{
     content: '';
     position: absolute;
     top: -1rem;

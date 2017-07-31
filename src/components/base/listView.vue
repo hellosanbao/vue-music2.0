@@ -21,11 +21,11 @@
           <div class="swiper-slide">
             <div class="list-content">
               <ul class="list">
-                <li class="item" v-for="data in datalist">
+                <li class="item" v-for="(data,index) in datalist" @click="selectPlay(data,datalist,index)">
                   <div class="flex-warp flex-middle">
                     <div class="flex-con">
                       <div class="name">{{data.songname}}</div>
-                      <div class="author"><span>{{data.author}}</span></div>
+                      <div class="author"><span>{{singerStr(data.singer)}}</span></div>
                     </div>
                     <div class="list-edit"><i class="iconfont icon-gengduo"></i></div>
                   </div>
@@ -46,7 +46,8 @@
 
 <script>
   import scroll from 'components/base/scroll';
-  import {fonts, prefixStyle} from 'common/js/base';
+  import {fonts, prefixStyle,gdMusicData} from 'common/js/base';
+  import {mapActions} from 'vuex';
   import $ from 'jquery';
 
   const transform = prefixStyle('transform');
@@ -86,6 +87,7 @@
       })
     },
     methods   : {
+      ...mapActions(['dispatchcgflae']),
       init(){
         this.top = `${this.$refs.listCover.clientHeight}px`;
         fonts(() => {
@@ -97,6 +99,21 @@
           });
         }, 200)
 
+      },
+      singerStr(data){
+          var arr =[];
+          data.forEach((el)=>{
+              arr.push(el.name)
+          })
+        return arr.join('、');
+      },
+      selectPlay(songMsg,songList,index){
+        var song=gdMusicData(songMsg);
+        var list=[];
+        songList.forEach((el)=>{
+            list.push(gdMusicData(el));
+        })
+        this.dispatchcgflae({songMsg:song,songList:list,index})
       },
       centerScroll(pos){
         this.scrollY = pos.y;

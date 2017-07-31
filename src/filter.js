@@ -6,3 +6,7 @@ Vue.filter('formatNum', function (val) {
   }
   return val
 });
+Vue.filter('formatTime', function (val) {
+  var m=parseInt(val/60)<10?'0'+parseInt(val/60):parseInt(val/60),s=val%60<10?'0'+val%60:val%60;
+  return m+":"+s
+});
