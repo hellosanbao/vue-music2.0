@@ -14,6 +14,8 @@ const state = {
   isPlay:false,
   //当前播放歌曲在歌曲列表中的索引
   curSongIndex:0,
+  palyTypeArr:['icon-loop','icon-sjbf','icon-dqxh'],//播放模式 icon-loop：顺序播放 icon-sjbf：随机播放 icon-dqxh：单曲循环
+  playType : 0,//对应palyTypeArr
 }
 
 //===================================================================mutations
@@ -36,6 +38,12 @@ const mutations = {
   },
   changeCurSongIndex(state,index){
     state.curSongIndex=index;
+  },
+  cheangePlayType(state){
+    state.playType++;
+    if(state.playType>state.palyTypeArr.length-1){
+      state.playType=0;
+    }
   }
 }
 

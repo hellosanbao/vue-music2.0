@@ -1,42 +1,44 @@
 <template>
-  <div class="player-content">
-    <div class="full-play" v-if="fullPlay">
-      <div class="full-content">
-        <div class="full-bg" :style="bgPic"></div>
-        <div class="header flex-warp flex-middle flex-between" @click="closeFullPlay">
-          <i class="left-con iconfont icon-down pr"></i>
-          <div class="title">{{songMsg.songname}}</div>
+  <div class = "player-content">
+    <div class = "full-play" v-if = "fullPlay">
+      <div class = "full-content">
+        <div class = "full-bg" :style = "bgPic"></div>
+        <div class = "header flex-warp flex-middle flex-between" @click = "closeFullPlay">
+          <i class = "left-con iconfont icon-down pr"></i>
+          <div class = "title">{{songMsg.songname}}</div>
           <!-- icon-collect-default -->
-          <i class="right-icon iconfont icon-aixin pr"></i>
+          <i class = "right-icon iconfont icon-aixin pr"></i>
         </div>
-        <div class="singer">{{singers}}</div>
-        <div class="player-cover active">
-          <img :src="pic" alt="">
+        <div class = "singer">{{singers}}</div>
+        <div class = "player-cover active">
+          <img :src = "pic" alt = "">
         </div>
-        <div class="lryc">暂无歌词</div>
-        <div class="rander-content flex-warp flex-middle">
-          <span class="cur">{{curTime | formatTime}}</span>
-          <div class="rander flex-con" ref="rander" @click="changeTime($event)" @touchmove="moveCurTime($event)">
-            <div class="cur-rander" :style="{width: playedProportion}"></div>
-            <div class="cicle" :style="{left:playedProportion}"
-                 @touchstart="changetouchBtn(true)"
-                 @touchend="changetouchBtn(false)"></div>
+        <div class = "lryc">暂无歌词</div>
+        <div class = "rander-content flex-warp flex-middle">
+          <span class = "cur">{{curTime | formatTime}}</span>
+          <div class = "rander flex-con" ref = "rander" @click = "changeTime($event)"
+               @touchmove = "moveCurTime($event)">
+            <div class = "cur-rander" :style = "{width: playedProportion}"></div>
+            <div class = "cicle" :style = "{left:playedProportion}"
+                 @touchstart = "changetouchBtn(true)"
+                 @touchend = "changetouchBtn(false)"></div>
           </div>
-          <span class="end">{{songMsg.interval | formatTime}}</span>
+          <span class = "end">{{songMsg.interval | formatTime}}</span>
         </div>
-        <div class="play-ctrl flex-warp flex-middle">
-          <div class="play-typ"><i class="iconfont icon-loop"></i></div>
-          <div class="play-btn flex-con flex-warp flex-middle flex-between">
-            <i class="iconfont icon-prev-song" @click="prev()"></i>
-            <i class="iconfont icon-play-song" v-if="!isPlay" @click="changePlayeState(true)"></i>
-            <i class="iconfont icon-pasue-play" v-if="isPlay" @click="changePlayeState(false)"></i>
-            <i class="iconfont icon-next-song" @click="next()"></i>
+        <div class = "play-ctrl flex-warp flex-middle">
+          <div class = "play-typ"><i class = "iconfont" :class = "palyState" @click="cheangePlayType"></i></div>
+          <div class = "play-btn flex-con flex-warp flex-middle flex-between">
+            <i class = "iconfont icon-prev-song" @click = "prev()"></i>
+            <i class = "iconfont"
+               :class = "{'icon-pasue-play':isPlay,'icon-play-song':!isPlay}"
+               @click = "changePlayeState(!isPlay)"></i>
+            <i class = "iconfont icon-next-song" @click = "next()"></i>
           </div>
-          <div class="menu"><i class="iconfont icon-bflb"></i></div>
+          <div class = "menu"><i class = "iconfont icon-bflb"></i></div>
         </div>
       </div>
     </div>
-    <audio ref='audioplay' :src="musicUrl" @play="play" @ended="end" @timeupdate="timeupdate"></audio>
+    <audio ref = 'audioplay' :src = "musicUrl" @play = "play" @ended = "end" @timeupdate = "timeupdate"></audio>
   </div>
 </template>
 
@@ -46,99 +48,120 @@
   export default{
     data(){
       return {
-        curTime:0,
-        playedProportion:0,
-        Proportion:0,
-        touchBtn:false
+        curTime         : 0, //当前播放时间
+        playedProportion: 0, //进度条百分比
+        Proportion      : 0, //进度条比例
+        touchBtn        : false, //是否按住range按钮
 
       }
     },
     computed: {
-      ...mapState(['fullPlay', 'songMsg','isPlay','songList','curSongIndex']),
+      ...mapState(['fullPlay', 'songMsg', 'isPlay', 'songList', 'curSongIndex','palyTypeArr','playType']),
+      palyState(){
+        return   this.palyTypeArr[this.playType];
+      },
       singers(){
-          var arr=[];
-          console.log()
-          this.songMsg.singer.forEach((el)=>{
-            arr.push(el.name);
-          })
-          return arr.join('、')
+        var arr = [];
+        console.log()
+        this.songMsg.singer.forEach((el) => {
+          arr.push(el.name);
+        })
+        return arr.join('、')
       },
       musicUrl(){
-          if(this.songMsg){
-            return `http://ws.stream.qqmusic.qq.com/${this.songMsg.songid}.m4a?fromtag=46`;
-          }
+        if (this.songMsg) {
+          return `http://ws.stream.qqmusic.qq.com/${this.songMsg.songid}.m4a?fromtag=46`;
+        }
       },
       pic(){
         return `https://y.gtimg.cn/music/photo_new/T002R300x300M000${this.songMsg.albummid}.jpg?max_age=2592000`;
       },
       bgPic(){
-          return `background:url(${this.pic}) no-repeat center/cover`
+        return `background:url(${this.pic}) no-repeat center/cover`
       }
     },
     methods : {
-      ...mapMutations(['closeFullPlay','changePlayeState','changeCurSongIndex','selectPlaySong']),
+      ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType']),
       play(){
-        console.log('播放了')
+        this.changePlayeState(true);
       },
       next(){
-          if(this.curSongIndex<this.songList.length-1){
-            this.changeCurSong(+1);
-          }else{
-              alert('已经是最后一首了');
-          }
+        if (this.curSongIndex < this.songList.length - 1) {
+          this.changeCurSong(1);
+        } else {
+          this.changeCurSongIndex(0);
+          this.selectPlaySong(this.songList[this.curSongIndex]);
+        }
 
       },
       prev(){
-          if(this.curSongIndex>0){
-            this.changeCurSong(-1);
-          }else{
-            alert('已经是第一首了');
-          }
+        if (this.curSongIndex > 0) {
+          this.changeCurSong(-1);
+        } else {
+          this.changeCurSongIndex(this.songList.length - 1);
+          this.selectPlaySong(this.songList[this.curSongIndex]);
+        }
       },
       end(){
-        this.next();
+        this.changeCurSong()
       },
       changeCurSong(tip){
-            this.changeCurSongIndex(this.curSongIndex+tip);
-            var songMsg=this.songList[this.curSongIndex];
-            this.selectPlaySong(songMsg);
+        var len = this.songList.length - 1;
+        if (!tip) {
+          switch (this.palyTypeArr[this.playType]) {
+            case 'icon-loop':
+              this.changeCurSongIndex(this.curSongIndex + 1);
+              break;
+            case 'icon-sjbf':
+              this.changeCurSongIndex(parseInt(len * Math.random()));
+              break;
+            case 'icon-dqxh':
+              this.changeCurSongIndex(this.curSongIndex);
+              break;
+          }
+        } else {
+          this.changeCurSongIndex(this.curSongIndex + tip);
+        }
+
+        var songMsg = this.songList[this.curSongIndex];
+        this.selectPlaySong(songMsg);
       },
       timeupdate(){
-          this.curTime=Math.floor(this.$refs.audioplay.currentTime);
-          if(!this.touchBtn){
-            this.playedProportion=this.curTime/this.songMsg.interval;
-            this.playedProportion=this.playedProportion*100+'%';
-          }
+        this.curTime = Math.floor(this.$refs.audioplay.currentTime);
+        if (!this.touchBtn) {
+          this.playedProportion = this.curTime / this.songMsg.interval;
+          this.playedProportion = this.playedProportion * 100 + '%';
+        }
 
       },
       changeProportion(event){
-        var event=event.touches?event.touches[0]:event;
-        var Proportion=(event.pageX-this.$refs.rander.offsetLeft)/this.$refs.rander.clientWidth;
-        if(Proportion<=0){
-          Proportion=0
-        }else if (Proportion>=1) {
-          Proportion=1
+        var event = event.touches ? event.touches[0] : event;
+        var Proportion = (event.pageX - this.$refs.rander.offsetLeft) / this.$refs.rander.clientWidth;
+        if (Proportion <= 0) {
+          Proportion = 0
+        } else if (Proportion >= 1) {
+          Proportion = 1
         }
-        this.playedProportion=Proportion*100+'%';
+        this.playedProportion = Proportion * 100 + '%';
         return Proportion;
       },
       changeTime(event){
-          var Proportion=this.changeProportion(event);
-          this.$refs.audioplay.currentTime=Proportion*this.songMsg.interval;
+        var Proportion = this.changeProportion(event);
+        this.$refs.audioplay.currentTime = Proportion * this.songMsg.interval;
       },
       moveCurTime(event){
-          if(this.touchBtn){
-            this.Proportion = this.changeProportion(event);
-          }
+        if (this.touchBtn) {
+          this.Proportion = this.changeProportion(event);
+        }
       },
       changetouchBtn(flg){
-          this.touchBtn=flg;
-          if(!flg){
-            this.$refs.audioplay.currentTime=this.Proportion*this.songMsg.interval;
-          }
+        this.touchBtn = flg;
+        if (!flg) {
+          this.$refs.audioplay.currentTime = this.Proportion * this.songMsg.interval;
+        }
       }
     },
-    watch:{
+    watch   : {
       songMsg(){
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
@@ -146,17 +169,17 @@
         }, 1000)
       },
       isPlay(nval){
-          if(nval){
-              this.$refs.audioplay.play();
-          }else {
-            this.$refs.audioplay.pause();
-          }
+        if (nval) {
+          this.$refs.audioplay.play();
+        } else {
+          this.$refs.audioplay.pause();
+        }
       }
     }
   }
 </script>
 
-<style scoped lang="scss" rel="stylesheet/scss">
+<style scoped lang = "scss" rel = "stylesheet/scss">
   @import "~common/css/base";
   @import "~common/css/mixin";
 
