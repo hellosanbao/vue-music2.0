@@ -33,11 +33,10 @@
   @import "~common/css/mixin";
   .ret-title{
     font-size: $font-size-large;
-    color: $color-text-ll;
+    color: $color-text-l;
     text-align: center;
     line-height: 3.5rem;
     position: relative;
-    color: $primary-text-color;
     &:after{
       font-family:"iconfont" !important;
       content: "\e642";
@@ -49,6 +48,7 @@
       line-height: 3.5rem;
       width: 3rem;
       text-align: center;
+      color: $color-text-d;
     }
   }
   .list{
@@ -69,17 +69,17 @@
         }
       },
       .nr{
-      margin-left: 1rem;
-      h3{
-        font-weight: 400;
-        font-size: $font-size-big;
-        color: $color-text-ll;
-      },
-    .tip{
-      font-size: $font-size-medium;
-      color: $color-text-i;
-      margin-top: 0.5rem;
-    }
+        margin-left: 1rem;
+        h3{
+          font-weight: 400;
+          font-size: $font-size-big;
+          color: $color-text-ll;
+        }
+      .tip{
+        font-size: $font-size-medium;
+        color: $color-text-i;
+        margin-top: 0.5rem;
+      }
     }
     }
   }

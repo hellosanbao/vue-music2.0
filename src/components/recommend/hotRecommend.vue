@@ -72,11 +72,10 @@
 
   .ret-title{
     font-size: $font-size-large;
-    color: $color-text-ll;
+    color: $color-text-l;
     text-align: center;
     line-height: 3.5rem;
     position: relative;
-    color: $primary-text-color;
     &:after{
       font-family:"iconfont" !important;
       content: "\e642";
@@ -88,6 +87,7 @@
       line-height: 3.5rem;
       width: 3rem;
       text-align: center;
+      color: $color-text-d;
     }
   }
   .hm-list {

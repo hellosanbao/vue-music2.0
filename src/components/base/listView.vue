@@ -7,7 +7,9 @@
         <i class="iconfont"></i>
       </div>
     </div>
-    <div class="list-cover" ref="listCover" :style="pic"></div>
+    <div class="list-cover" ref="listCover" :style="pic">
+      <div class="play-rand"><i class="iconfont icon-play-song"></i>随机播放全部</div>
+    </div>
     <div class="head-tab flex-warp" ref="headTab" v-show="false"></div>
     <scroll :top="top" ref="scroll"
             class="scroll-singerSongList"
@@ -16,7 +18,6 @@
             :class="{hide:false}">
       <!--<div class="fixed-cover"></div>-->
       <div style="background-color: #fff">
-        <div class="play-rand"><i class="iconfont icon-play-song"></i>随机播放全部</div>
         <div class="swiper-wrapper">
           <div class="swiper-slide">
             <div class="list-content">
@@ -182,6 +183,20 @@
       padding-top: 80%;
       background: url("../../common/img/logo@3x.png") no-repeat center/100% auto #fff;
       /*z-index: 10;*/
+      .play-rand {
+        position: absolute;
+        left: 50%;
+        bottom: 3rem;
+        transform: translateX(-50%);
+        color: $primary-text-color;
+        font-size: $font-size-big-x;
+        border: 1px solid $primary-text-color;
+        border-radius: 1.5rem;
+        padding: 0.2rem 1rem;
+        .iconfont {
+          margin-right: 0.5rem;
+        }
+      }
     }
     .hide {
       overflow: hidden;
@@ -222,20 +237,6 @@
     }
     .scroll-singerSongList {
       /*background-color: #fff;*/
-      .play-rand {
-        position: absolute;
-        left: 50%;
-        top: -4rem;
-        transform: translateX(-50%);
-        color: $primary-text-color;
-        font-size: $font-size-big-x;
-        border: 1px solid $primary-text-color;
-        border-radius: 1.5rem;
-        padding: 0.2rem 1rem;
-        .iconfont {
-          margin-right: 0.5rem;
-        }
-      }
       .list-content {
         .list {
           .item {

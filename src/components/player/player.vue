@@ -38,6 +38,8 @@
         </div>
       </div>
     </div>
+
+    <div class="mini-play"></div>
     <audio ref = 'audioplay' :src = "musicUrl" @play = "play" @ended = "end" @timeupdate = "timeupdate"></audio>
   </div>
 </template>

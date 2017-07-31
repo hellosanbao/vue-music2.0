@@ -44,11 +44,10 @@
   @import "~common/css/base";
   .ret-title {
     font-size: $font-size-large;
-    color: $color-text-ll;
+    color: $color-text-l;
     text-align: center;
     line-height: 3.5rem;
     position: relative;
-    color: $primary-text-color;
     &:after {
       font-family: "iconfont" !important;
       content: "\e642";
@@ -60,6 +59,7 @@
       line-height: 3.5rem;
       width: 3rem;
       text-align: center;
+      color: $color-text-d;
     }
   }
 
@@ -96,7 +96,7 @@
     }
     .desc{
       padding: 0.2rem;
-      font-size: $font-size-small;
+      font-size: $font-size-medium-x;
       color: $color-text-ll;
     }
   }
