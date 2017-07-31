@@ -125,6 +125,9 @@
 
         var songMsg = this.songList[this.curSongIndex];
         this.selectPlaySong(songMsg);
+        this.timer = setTimeout(() => {
+          this.$refs.audioplay.play();
+        }, 500)
       },
       timeupdate(){
         this.curTime = Math.floor(this.$refs.audioplay.currentTime);
@@ -302,6 +305,9 @@
         padding: 2rem;
         .play-typ, .menu {
           .iconfont {
+            display: block;
+            width: 3rem;
+            text-align: center;
             font-size: 2.5rem;
             color: #dfdfdf;
           }
