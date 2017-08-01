@@ -5,8 +5,8 @@
         <div class = "full-content">
           <div class = "full-bg" :style = "bgPic"></div>
           <div class="top">
-            <div class = "header flex-warp flex-middle flex-between" @click = "closeFullPlay">
-              <i class = "left-con iconfont icon-down pr"></i>
+            <div class = "header flex-warp flex-middle flex-between">
+              <i class = "left-con iconfont icon-down pr"  @click = "closeFullPlay"></i>
               <div class = "title">{{songMsg.songname}}</div>
               <!-- icon-collect-default -->
               <i class = "right-icon iconfont icon-aixin pr"></i>

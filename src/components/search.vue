@@ -23,9 +23,109 @@
     <div class="hist">
       <div class="til flex-warp flex-middle flex-between"><p>搜搜历史</p><p class="clear">清除历史</p></div>
       <ul class="hist-list">
-        <li class="item">
+        <li class="item flex-warp flex-middle flex-between">
           <div>差不多先生 本兮</div>
-          <div class="clear">qincghu </div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
+        </li>
+        <li class="item flex-warp flex-middle flex-between">
+          <div>差不多先生 本兮</div>
+          <div class="clear"><i class="iconfont icon-add"></i><i class="iconfont icon-close"></i> </div>
         </li>
       </ul>
     </div>
@@ -52,6 +152,7 @@
   @import "~common/css/base";
   @import "~common/css/mixin";
   .search-component{
+    overflow-y: auto;
     position: fixed;
     left: 0;
     top:0;
@@ -61,8 +162,14 @@
     margin-top: 0!important;
     background-color: #fff;
     .search-header{
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
       padding: 0 1rem;
       height: 4.4rem;
+      background-color: #fff;
+      z-index: 999;
       box-shadow: 0 1px 1rem rgba(0,0,0,.1);
       label{
         margin-right: 1rem;
@@ -83,7 +190,7 @@
       }
     }
     .hot{
-      padding: 1rem;
+      padding: 5.4rem 1rem 1rem;
       .til{
         font-size: $font-size-medium-x;
         color: $color-text-l;
@@ -105,6 +212,22 @@
         color: $color-text-l;
         .clear{
           color:$primary-text-color;
+        }
+      }
+      .hist-list{
+        .item{
+          margin-left: 1rem;
+          padding-right: 1rem;
+          @include border-1px-b();
+          height: 3.6rem;
+          .iconfont{
+            margin-left: 2rem;
+            @include extend-click();
+            color: $color-text-i;
+            &.icon-add{
+              color: $primary-text-color;
+            }
+          }
         }
       }
     }
