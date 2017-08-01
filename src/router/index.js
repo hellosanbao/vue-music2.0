@@ -6,6 +6,8 @@ import hots from 'components/hosts/hots.vue'
 import singerSongList from 'components/singerSongList.vue'
 import recommendDetail from 'components/recommend/recommendDetail.vue'
 import hotDetail from 'components/hosts/hotDetail.vue'
+import search from 'components/search.vue'
+import member from 'components/member.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -43,6 +45,18 @@ export default new Router({
           component: hotDetail
         }
       ]
+    },
+    {
+      path:'/search',
+      components:{
+        win:search
+      }
+    },
+    {
+      path:'/member',
+      components:{
+        win:member
+      }
     },
     {
       path:'/',

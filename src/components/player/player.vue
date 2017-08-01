@@ -1,45 +1,57 @@
 <template>
   <div class = "player-content">
-    <div class = "full-play" v-if = "fullPlay">
-      <div class = "full-content">
-        <div class = "full-bg" :style = "bgPic"></div>
-        <div class = "header flex-warp flex-middle flex-between" @click = "closeFullPlay">
-          <i class = "left-con iconfont icon-down pr"></i>
-          <div class = "title">{{songMsg.songname}}</div>
-          <!-- icon-collect-default -->
-          <i class = "right-icon iconfont icon-aixin pr"></i>
-        </div>
-        <div class = "singer">{{singers}}</div>
-        <div class = "player-cover active">
-          <img :src = "pic" alt = "">
-        </div>
-        <div class = "lryc">暂无歌词</div>
-        <div class = "rander-content flex-warp flex-middle">
-          <span class = "cur">{{curTime | formatTime}}</span>
-          <div class = "rander flex-con" ref = "rander" @click = "changeTime($event)"
-               @touchmove = "moveCurTime($event)">
-            <div class = "cur-rander" :style = "{width: playedProportion}"></div>
-            <div class = "cicle" :style = "{left:playedProportion}"
-                 @touchstart = "changetouchBtn(true)"
-                 @touchend = "changetouchBtn(false)"></div>
+    <transition name="slideInRight">
+      <div class = "full-play" v-if = "fullPlay">
+        <div class = "full-content">
+          <div class = "full-bg" :style = "bgPic"></div>
+          <div class="top">
+            <div class = "header flex-warp flex-middle flex-between" @click = "closeFullPlay">
+              <i class = "left-con iconfont icon-down pr"></i>
+              <div class = "title">{{songMsg.songname}}</div>
+              <!-- icon-collect-default -->
+              <i class = "right-icon iconfont icon-aixin pr"></i>
+            </div>
+            <div class = "singer">{{singers}}</div>
           </div>
-          <span class = "end">{{songMsg.interval | formatTime}}</span>
-        </div>
-        <div class = "play-ctrl flex-warp flex-middle">
-          <div class = "play-typ"><i class = "iconfont" :class = "palyState" @click="cheangePlayType"></i></div>
-          <div class = "play-btn flex-con flex-warp flex-middle flex-between">
-            <i class = "iconfont icon-prev-song" @click = "prev()"></i>
-            <i class = "iconfont"
-               :class = "{'icon-pasue-play':isPlay,'icon-play-song':!isPlay}"
-               @click = "changePlayeState(!isPlay)"></i>
-            <i class = "iconfont icon-next-song" @click = "next()"></i>
+          <div class = "player-cover active">
+            <img :src = "pic" alt = "">
           </div>
-          <div class = "menu"><i class = "iconfont icon-bflb"></i></div>
+          <div class="bottom">
+            <div class = "lryc">暂无歌词</div>
+            <div class = "rander-content flex-warp flex-middle">
+              <span class = "cur">{{curTime | formatTime}}</span>
+              <div class = "rander flex-con" ref = "rander" @click = "changeTime($event)"
+                   @touchmove = "moveCurTime($event)">
+                <div class = "cur-rander" :style = "{width: playedProportion}"></div>
+                <div class = "cicle" :style = "{left:playedProportion}"
+                     @touchstart = "changetouchBtn(true)"
+                     @touchend = "changetouchBtn(false)"></div>
+              </div>
+              <span class = "end">{{songMsg.interval | formatTime}}</span>
+            </div>
+            <div class = "play-ctrl flex-warp flex-middle">
+              <div class = "play-typ"><i class = "iconfont" :class = "palyState" @click="cheangePlayType"></i></div>
+              <div class = "play-btn flex-con flex-warp flex-middle flex-between">
+                <i class = "iconfont icon-prev-song" @click = "prev()"></i>
+                <i class = "iconfont"
+                   :class = "{'icon-pasue-play':isPlay,'icon-play-song':!isPlay}"
+                   @click = "changePlayeState(!isPlay)"></i>
+                <i class = "iconfont icon-next-song" @click = "next()"></i>
+              </div>
+              <div class = "menu"><i class = "iconfont icon-bflb"></i></div>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div>
+    </transition>
 
-    <div class="mini-play"></div>
+
+    <div class="mini-play">
+      <div class="mini-play-content  flex-warp flex-middle">
+
+      </div>
+    </div>
     <audio ref = 'audioplay' :src = "musicUrl" @play = "play" @ended = "end" @timeupdate = "timeupdate"></audio>
   </div>
 </template>
@@ -108,6 +120,7 @@
         this.changeCurSong()
       },
       changeCurSong(tip){
+          var _this=this;
         var len = this.songList.length - 1;
         if (!tip) {
           switch (this.palyTypeArr[this.playType]) {
@@ -115,7 +128,14 @@
               this.changeCurSongIndex(this.curSongIndex + 1);
               break;
             case 'icon-sjbf':
-              this.changeCurSongIndex(parseInt(len * Math.random()));
+                function a() {
+                  var ind=parseInt(len * Math.random());
+                  if(ind==_this.curSongIndex){
+                      a()
+                  }
+                  return ind;
+                }
+              this.changeCurSongIndex(a());
               break;
             case 'icon-dqxh':
               this.changeCurSongIndex(this.curSongIndex);
@@ -326,8 +346,35 @@
         }
       }
     }
-
   }
+
+  .mini-play{
+    height: 5rem;
+    box-shadow: 0 -1px 1.5rem rgba(0,0,0,.1);
+    background-color: #fff;
+    position: fixed;
+    left:0;
+    bottom:0;
+    width: 100%;
+    z-index: 99999;
+  }
+
+  .slideInRight-enter-active,.slideInRight-leave-active {
+    transition: all .3s ;
+    .top, .bottom{
+      transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
+    }
+  }
+  .slideInRight-enter, .slideInRight-leave-to{
+    opacity: 0;
+  .top{
+    transform: translate3d(0, -100px, 0)
+  }
+  .bottom{
+    transform: translate3d(0, 100px, 0)
+  }
+  }
+
 
   @keyframes rot {
     from {

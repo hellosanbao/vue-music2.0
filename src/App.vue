@@ -8,6 +8,9 @@
     <keep-alive>
       <router-view id="main-content"></router-view>
     </keep-alive>
+    <transition name="slideInRight">
+      <router-view name="win"></router-view>
+    </transition>
 
   </div>
 </template>
@@ -38,4 +41,14 @@ export default {
   #main-content{
     margin-top: 9.5rem;
   }
+    .slideInRight-enter-active {
+      transition: all .3s ease;
+    }
+    .slideInRight-leave-active {
+      transition: all .3s ease;
+    }
+    .slideInRight-enter, .slideInRight-leave-to
+      /* .slide-fade-leave-active for below version 2.1.8 */ {
+      transform: translateX(100%);
+    }
 </style>
