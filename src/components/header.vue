@@ -1,13 +1,13 @@
 <template>
   <div class = "header">
-    <router-link to = "/member" tag = "div" class = "left">
+    <router-link to = "/member" id='main-member' tag = "div" class = "left">
       <i class = "iconfont icon-user"></i>
     </router-link>
     <div class = "logo">
       <img src = "../common/img/logo@3x.png" alt = "">
       <div class = "logo-name">QQ音乐</div>
     </div>
-    <router-link to = "/search" tag = "div" class = "right">
+    <router-link to = "/search" id='main-search' tag = "div" class = "right">
       <i class = "iconfont icon-cg-app-search"></i>
     </router-link>
   </div>
