@@ -50,7 +50,13 @@ export default new Router({
       path:'/search',
       components:{
         win:search
-      }
+      },
+      children: [
+        {
+          path: ':id',
+          component: singerSongList
+        }
+      ]
     },
     {
       path:'/member',

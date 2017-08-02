@@ -67,3 +67,13 @@ export function gdMusicData(songMsg){
 
   }
 }
+export function localMusicData(songMsg){
+  return {
+    // songname:songMsg.songname,
+    // interval:songMsg.interval,
+    // singer:songMsg.singer,
+    // songid:songMsg.songid,
+    // albummid:songMsg.albummid
+
+  }
+}
