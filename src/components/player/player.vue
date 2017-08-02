@@ -13,7 +13,7 @@
             </div>
             <div class = "singer">{{singers}}</div>
           </div>
-          <div class = "player-cover active">
+          <div class = "player-cover" :class="{active:isPlay}">
             <img :src = "pic" alt = "">
           </div>
           <div class="bottom">
@@ -38,7 +38,7 @@
                    @click = "changePlayeState(!isPlay)"></i>
                 <i class = "iconfont icon-next-song" @click = "next()"></i>
               </div>
-              <div class = "menu"><i class = "iconfont icon-bflb"></i></div>
+              <div class = "menu" @click="toggleShowMySongList"><i class = "iconfont icon-bflb"></i></div>
             </div>
           </div>
 
@@ -46,12 +46,20 @@
       </div>
     </transition>
 
-
-    <div class="mini-play">
-      <div class="mini-play-content  flex-warp flex-middle">
-
+    <transition name="slideInUp">
+      <div class="mini-play" v-if = "!fullPlay" @click="openfullPlay">
+        <div class="mini-play-content  flex-warp flex-middle">
+          <div class="avat" :class="{active:isPlay}"><img :src="pic" alt=""></div>
+          <div class="msg flex-con">
+            <p class="name" v-html="songMsg.songname"></p>
+            <p class="singer" v-html="singers"></p>
+          </div>
+          <div class="progress"></div>
+          <div class = "menu" @click.stop="toggleShowMySongList"><i class = "iconfont icon-bflb"></i></div>
+        </div>
       </div>
-    </div>
+    </transition>
+
     <audio ref = 'audioplay' :src = "musicUrl" @play = "play" @ended = "end" @timeupdate = "timeupdate"></audio>
   </div>
 </template>
@@ -76,11 +84,13 @@
       },
       singers(){
         var arr = [];
-        console.log()
-        this.songMsg.singer.forEach((el) => {
-          arr.push(el.name);
-        })
-        return arr.join('、')
+        if(this.songMsg.singer){
+          this.songMsg.singer.forEach((el) => {
+            arr.push(el.name);
+          })
+          return arr.join('、')
+        }
+        return '未知歌手'
       },
       musicUrl(){
         if (this.songMsg) {
@@ -95,7 +105,7 @@
       }
     },
     methods : {
-      ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType']),
+      ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType','toggleShowMySongList','openfullPlay']),
       play(){
         this.changePlayeState(true);
       },
@@ -125,7 +135,11 @@
         if (!tip) {
           switch (this.palyTypeArr[this.playType]) {
             case 'icon-loop':
-              this.changeCurSongIndex(this.curSongIndex + 1);
+              if (this.curSongIndex < this.songList.length - 1) {
+                this.changeCurSongIndex(this.curSongIndex + 1);
+              } else {
+                this.changeCurSongIndex(0);
+              }
               break;
             case 'icon-sjbf':
                 function a() {
@@ -349,7 +363,7 @@
   }
 
   .mini-play{
-    height: 5rem;
+    height: 6rem;
     box-shadow: 0 -1px 1.5rem rgba(0,0,0,.1);
     background-color: #fff;
     position: fixed;
@@ -357,6 +371,45 @@
     bottom:0;
     width: 100%;
     z-index: 99999;
+    .mini-play-content{
+      height: 6rem;
+      padding: 0 1rem;
+      margin: 0!important;
+      .avat{
+        height: 4rem;
+        width: 4rem;
+        border-radius: 50%;
+        border: 2px solid #d7d7d7;
+        overflow: hidden;
+        &.active {
+          animation: rot 20s infinite linear;
+        }
+        img{
+          display: block;
+          width: 100%;
+          height: 100%;
+          vertical-align: middle;
+        }
+      },
+      .msg{
+      margin-left: 1rem;
+      .name{
+        font-size: 1.3rem;
+      }
+      .singer{
+        color: $color-text-i;
+        font-size: 1rem;
+      }
+    }
+      .menu{
+        .iconfont{
+          @include extend-click();
+          font-size: 2.5rem;
+          color: $color-text-i;
+        }
+
+      }
+    }
   }
 
   .slideInRight-enter-active,.slideInRight-leave-active {
@@ -374,7 +427,12 @@
     transform: translate3d(0, 100px, 0)
   }
   }
-
+  .slideInUp-enter-active,.slideInUp-leave-active{
+    transition: all .3s ;
+  }
+  .slideInUp-enter, .slideInUp-leave-to{
+    transform: translate3d(0, 100%, 0)
+  }
 
   @keyframes rot {
     from {

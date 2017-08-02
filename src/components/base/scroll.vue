@@ -59,7 +59,10 @@
     position: fixed;
     left: 0;
     top: 9.5rem;
-    bottom: 0;
+    bottom: 6rem;
     width: 100%;
+  }
+  .scroll-components.active{
+    bottom:6rem;
   }
 </style>

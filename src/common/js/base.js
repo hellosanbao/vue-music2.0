@@ -1,10 +1,10 @@
-(() => {
-  document.addEventListener('DOMContentLoaded', function () {
-    var html = document.documentElement;
-    var windowWidth = html.clientWidth;
-    html.style.fontSize = windowWidth / 75 * 2 + 'px';
-  }, false);
-})();
+function calcfonts(){
+  var html = document.documentElement;
+  var windowWidth = window.innerWidth;
+  html.style.fontSize = windowWidth / 75 * 2 + 'px';
+}
+document.addEventListener('DOMContentLoaded', calcfonts, false);
+window.onresize=calcfonts;
 
 export function fonts(func) {
   var html = document.documentElement;
@@ -77,3 +77,5 @@ export function localMusicData(songMsg){
 
   }
 }
+
+

@@ -43,6 +43,7 @@
             <p class="songname" v-html="res.songname"></p>
             <p class="singername" v-html="singer(res.singer)"></p>
           </div>
+          <div class="add" @click.stop="addCollect(res)"><i class="iconfont icon-add"></i></div>
         </li>
       </ul>
     </div>
@@ -80,8 +81,13 @@ import {mapActions,mapState,mapMutations} from 'vuex'
     },
     methods : {
       ...mapActions(['dispatchcgflae']),
+      ...mapMutations(['AddToSongList']),
       init(){
         this.getHotList();
+      },
+      addCollect(song){
+        var songMsg=gdMusicData(song);
+        this.AddToSongList(songMsg);
       },
       selectSong(song,index){
         var songMsg=gdMusicData(song);
@@ -146,9 +152,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
         })
         jsonp(url,datas,options).then((res)=>{
           this.resList=res.data.song.list;
-          if(res.data.zhida.type===2){
-              this.zhida=res.data.zhida;
-          }
+          this.zhida=res.data.zhida;
         })
       }
     },
@@ -254,7 +258,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
       left: 0;
       right: 0;
       top: 5.4rem;
-      bottom: 0;
+      bottom: 6rem;
       background-color: #fff;
       z-index: 9999;
       overflow-y: scroll;
@@ -279,6 +283,12 @@ import {mapActions,mapState,mapMutations} from 'vuex'
               font-size: 3rem;
               color: $color-text-d;
               font-weight: 100;
+            }
+          }
+          .add{
+            .icon-add{
+              color: $color-text-d;
+              @include extend-click();
             }
           }
         }
