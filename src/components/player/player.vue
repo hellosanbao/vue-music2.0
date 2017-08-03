@@ -7,11 +7,11 @@
           <div class="top">
             <div class = "header flex-warp flex-middle flex-between">
               <i class = "left-con iconfont icon-down pr"  @click = "closeFullPlay"></i>
-              <div class = "title">{{songMsg.songname}}</div>
+              <div class = "title" v-html="songMsg.songname"></div>
               <!-- icon-collect-default -->
-              <i class = "right-icon iconfont icon-aixin pr"></i>
+              <i class = "right-icon iconfont icon-aixin pr" :class="{active:isCollect}" @click="toggleCollect"></i>
             </div>
-            <div class = "singer">{{singers}}</div>
+            <div class = "singer" v-html="singers"></div>
           </div>
           <div class = "player-cover" :class="{active:isPlay}">
             <img :src = "pic" alt = "">
@@ -74,11 +74,19 @@
         playedProportion: 0, //进度条百分比
         Proportion      : 0, //进度条比例
         touchBtn        : false, //是否按住range按钮
-
       }
     },
     computed: {
-      ...mapState(['fullPlay', 'songMsg', 'isPlay', 'songList', 'curSongIndex','palyTypeArr','playType']),
+      ...mapState(['fullPlay', 'songMsg', 'isPlay', 'songList', 'curSongIndex','palyTypeArr','playType','mySongList']),
+      isCollect(){
+          var c = false;
+          this.mySongList.forEach((el)=>{
+              if(el.songid===this.songMsg.songid){
+                  c=true;
+              }
+          })
+        return c;
+      },
       palyState(){
         return   this.palyTypeArr[this.playType];
       },
@@ -105,7 +113,7 @@
       }
     },
     methods : {
-      ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType','toggleShowMySongList','openfullPlay']),
+      ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType','toggleShowMySongList','openfullPlay','AddToMySongList','delFromMySongList']),
       play(){
         this.changePlayeState(true);
       },
@@ -128,6 +136,20 @@
       },
       end(){
         this.changeCurSong()
+      },
+      toggleCollect(){
+          if(!this.isCollect){
+              this.AddToMySongList(this.songMsg)
+          }else{
+              var index=0;
+              this.mySongList.forEach((el,i)=>{
+                  if(el.songid===this.songMsg.songid){
+                    index=i;
+                  }
+              })
+              this.delFromMySongList(index)
+          }
+//        this.isCollect=!this.isCollect;
       },
       changeCurSong(tip){
           var _this=this;
@@ -263,6 +285,9 @@
           font-size: 2rem;
           margin-right: 0.5rem;
           &.icon-aixin {
+            color:$color-text-d;
+          }
+          &.icon-aixin.active {
             color: #d93f30;
           }
         }

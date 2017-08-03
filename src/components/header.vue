@@ -1,7 +1,7 @@
 <template>
   <div class = "header">
     <router-link to = "/member" id='main-member' tag = "div" class = "left">
-      <i class = "iconfont icon-user"></i>
+      <i class = "iconfont icon-collect"></i>
     </router-link>
     <div class = "logo">
       <img src = "../common/img/logo@3x.png" alt = "">

@@ -17,9 +17,11 @@ const state = {
   palyTypeArr:['icon-loop','icon-sjbf','icon-dqxh'],//播放模式 icon-loop：顺序播放 icon-sjbf：随机播放 icon-dqxh：单曲循环
   playType : 0,//对应palyTypeArr
   //我的收藏列表
-  mySongList:JSON.parse(window.localStorage.getItem('mySongList'))?JSON.parse(window.localStorage.getItem('mySongList')):[],
+  mySongList:window.localStorage.getItem('mySongList')?JSON.parse(window.localStorage.getItem('mySongList')):[],
   //是否显示播放列表
-  isShowMySongList:false
+  isShowMySongList:false,
+  //历史搜索
+  historyKeyword:window.localStorage.getItem('historyKeyword')?window.localStorage.getItem('historyKeyword').split(','):[],
 
 }
 
@@ -51,19 +53,22 @@ const mutations = {
       state.playType=0;
     }
   },
-  //添加到我的播放列表
+  //添加到我的收藏
   AddToMySongList(state,song){
     var flg=true;
-    state.mySongList.forEach((el)=>{
+    var ind=0;
+    state.mySongList.forEach((el,i)=>{
       if(el.songid===song.songid){
         flg=false;
+        ind=i;
       }
     })
     if(flg) {
       state.mySongList.unshift(song);
       window.localStorage.setItem('mySongList',JSON.stringify(state.mySongList))
     }else{
-      alert('该歌曲已收藏')
+      state.mySongList.splice(ind,1)
+      window.localStorage.setItem('mySongList',JSON.stringify(state.mySongList))
     }
 
   },
@@ -78,7 +83,7 @@ const mutations = {
     window.localStorage.setItem('mySongList',JSON.stringify(state.mySongList))
   },
   toggleShowMySongList(state){
-    if(state.mySongList.length>0){
+    if(state.songList.length>0){
       state.isShowMySongList=!state.isShowMySongList;
     }else{
       alert('还没有收藏')
@@ -110,6 +115,30 @@ const mutations = {
   clearSongList(state){
     state.songList=[];
   },
+  //添加搜索历史记录
+  addHistoryKey(state,key){
+    var flg=true;
+    state.historyKeyword.forEach((el)=>{
+      if(el===key){
+        flg=false;
+      }
+    })
+    if(flg){
+      state.historyKeyword.unshift(key);
+      window.localStorage.setItem('historyKeyword',state.historyKeyword)
+    }
+
+  },
+  //删除搜索历史记录
+  delFromHistory(state,index){
+    state.historyKeyword.splice(index,1);
+    window.localStorage.setItem('historyKeyword',state.historyKeyword)
+  },
+  //清空 搜索历史记录
+  clearHistory(state){
+    state.historyKeyword=[];
+    window.localStorage.setItem('historyKeyword',state.historyKeyword)
+  }
 }
 
 //===================================================================actions

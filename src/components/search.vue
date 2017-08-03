@@ -15,38 +15,41 @@
         <li class = "item" v-for="hot in hotList" @click="search(hot.k)">{{hot.k}}</li>
       </ul>
     </div>
-    <div class = "hist">
+    <div class = "hist" v-if="historyKeyword.length">
       <div class = "til flex-warp flex-middle flex-between"><p>搜搜历史</p>
-        <p class = "clear">清除历史</p></div>
+        <p class = "clear" @click="clearHistory">清除历史</p></div>
       <ul class = "hist-list">
-        <li class = "item flex-warp flex-middle flex-between">
-          <div>差不多先生 本兮</div>
-          <div class = "clear"><i class = "iconfont icon-close"></i></div>
+        <li class = "item flex-warp flex-middle flex-between" v-for="(hist,index) in historyKeyword" @click="search(hist)">
+          <div v-html="hist"></div>
+          <div class = "clear" @click.stop="delFromHistory(index)"><i class = "iconfont icon-close"></i></div>
         </li>
       </ul>
     </div>
-    <div class = "search-res" v-if = "showRes">
-      <ul class = "res-list">
-        <router-link tag="li" :to="'/search/'+zhida.singermid" :key="zhida.singermid" class="singer flex-warp flex-middle" v-if="zhida.type===2">
-          <div class="avat"><img v-lazy="picUrl(zhida)" alt=""></div>
-          <div class="name">
-            <p class="sname">{{zhida.singername}}</p>
-            <p class="count">
-              <span class="abnum">专辑 {{zhida.albumnum}}</span>
-              <span class="snum">单曲 {{zhida.songnum}}</span>
-            </p>
-          </div>
-        </router-link>
-        <li class = "item flex-warp flex-middle" v-for="(res,index) in resList" @click="selectSong(res,index)">
-          <div class="avat"><i class="iconfont icon-ej"></i></div>
-          <div class="flex-con">
-            <p class="songname" v-html="res.songname"></p>
-            <p class="singername" v-html="singer(res.singer)"></p>
-          </div>
-          <div class="add" @click.stop="addCollect(res)"><i class="iconfont icon-add"></i></div>
-        </li>
-      </ul>
-    </div>
+    <transition name="fadeInUp">
+      <div class = "search-res" v-if = "showRes">
+        <ul class = "res-list">
+          <router-link tag="li" :to="'/search/'+zhida.singermid" :key="zhida.singermid" class="singer flex-warp flex-middle" v-if="zhida.type===2">
+            <div class="avat"><img v-lazy="picUrl(zhida)" alt=""></div>
+            <div class="name">
+              <p class="sname">{{zhida.singername}}</p>
+              <p class="count">
+                <span class="abnum">专辑 {{zhida.albumnum}}</span>
+                <span class="snum">单曲 {{zhida.songnum}}</span>
+              </p>
+            </div>
+          </router-link>
+          <li class = "item flex-warp flex-middle" v-for="(res,index) in resList" @click="selectSong(res,index)">
+            <div class="avat"><i class="iconfont icon-ej"></i></div>
+            <div class="flex-con">
+              <p class="songname" v-html="res.songname"></p>
+              <p class="singername" v-html="singer(res.singer)"></p>
+            </div>
+            <div class="collect" @click.stop="addMyCollect(res)"><i class="iconfont icon-aixin"></i></div>
+            <div class="add" @click.stop="addCollect(res)"><i class="iconfont icon-add"></i></div>
+          </li>
+        </ul>
+      </div>
+    </transition>
     <transition name="slideInRight">
       <router-view></router-view>
     </transition>
@@ -68,7 +71,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
       }
     },
     computed: {
-      ...mapState(['curSongIndex']),
+      ...mapState(['curSongIndex','historyKeyword']),
       showRes(){
         return this.resList.length > 0;
       },
@@ -81,13 +84,17 @@ import {mapActions,mapState,mapMutations} from 'vuex'
     },
     methods : {
       ...mapActions(['dispatchcgflae']),
-      ...mapMutations(['AddToSongList']),
+      ...mapMutations(['addToSongList','AddToMySongList','addHistoryKey','delFromHistory','clearHistory']),
       init(){
         this.getHotList();
       },
       addCollect(song){
         var songMsg=gdMusicData(song);
-        this.AddToSongList(songMsg);
+        this.addToSongList(songMsg);
+      },
+      addMyCollect(song){
+        var songMsg=gdMusicData(song);
+        this.AddToMySongList(songMsg);
       },
       selectSong(song,index){
         var songMsg=gdMusicData(song);
@@ -130,6 +137,9 @@ import {mapActions,mapState,mapMutations} from 'vuex'
       },
       search(keyword){
         this.keyword=keyword;
+        this.addHistoryKey(keyword);
+      },
+      searPost(keyword){
         var url = 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp';
         var datas=Object.assign({},recommend,{
           uin:0,
@@ -158,7 +168,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
     },
     watch:{
       keyword(nval){
-          this.search(nval);
+          this.searPost(nval);
       }
     }
   }
@@ -291,6 +301,13 @@ import {mapActions,mapState,mapMutations} from 'vuex'
               @include extend-click();
             }
           }
+          .collect{
+            margin-right: 1.5rem;
+            .iconfont{
+              color: $color-text-d;
+              @include extend-click();
+            }
+          }
         }
       }
       .singer {
@@ -322,14 +339,25 @@ import {mapActions,mapState,mapMutations} from 'vuex'
       }
     }
   }
-  .slideInRight-enter-active {
-    transition: all .3s ease;
-  }
-  .slideInRight-leave-active {
+  .slideInRight-enter-active,.slideInRight-leave-active{
     transition: all .3s ease;
   }
   .slideInRight-enter, .slideInRight-leave-to
     /* .slide-fade-leave-active for below version 2.1.8 */ {
     transform: translateX(100%);
+  }
+  .fadeInUp-enter-active{
+    transition: all .2s linear;
+  }
+  .fadeInUp-leave-active{
+    transition: all .6s linear;
+  }
+  .fadeInUp-leave-to{
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  .fadeInUp-enter{
+    opacity: 0;
+    transform: translateY(-2.5rem);
   }
 </style>
