@@ -164,14 +164,15 @@
               }
               break;
             case 'icon-sjbf':
-                function a() {
-                  var ind=parseInt(len * Math.random());
-                  if(ind==_this.curSongIndex){
-                      a()
-                  }
-                  return ind;
-                }
-              this.changeCurSongIndex(a());
+              var ind=parseInt(len * Math.random());
+//                function a() {
+//                  var ind=parseInt(len * Math.random());
+//                  if(ind==_this.curSongIndex){
+//                      a()
+//                  }
+//                  return ind;
+//                }
+              this.changeCurSongIndex(ind);
               break;
             case 'icon-dqxh':
               this.changeCurSongIndex(this.curSongIndex);
@@ -316,8 +317,11 @@
         margin: 3rem auto 0;
         border: 0.7rem solid #d7d7d7;
         background-color: #fff;
+        animation: rot 20s infinite linear;
+        animation-play-state:paused;
         &.active {
-          animation: rot 20s infinite linear;
+          animation-play-state:running;
+          /*animation: rot 20s infinite linear;*/
         }
         img {
           display: block;
