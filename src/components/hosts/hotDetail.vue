@@ -6,6 +6,7 @@
   import jsonp from 'common/js/jsonp';
   import {recommend, options} from '@/apiConfig';
   import listView from 'components/base/listView'
+  import {mapMutations} from 'vuex'
   export default{
     data(){
       return {
@@ -18,7 +19,9 @@
       this.init();
     },
     methods: {
+      ...mapMutations(['HideLoading','ShowLoading']),
       init(){
+          this.ShowLoading();
         this.getRecommendList();
       },
       getRecommendList(){
@@ -47,6 +50,7 @@
             arr.push(el.data)
           })
           this.recommendList=this.recommendList.concat(arr);
+          this.HideLoading();
         })
 
       }

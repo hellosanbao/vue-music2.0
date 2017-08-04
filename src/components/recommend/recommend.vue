@@ -27,7 +27,7 @@
   import hotRecommend from 'components/recommend/hotRecommend';
   import hotRecommendMv from 'components/recommend/hotRecommendMv';
   import recommendList from 'components/recommend/recommendList';
-  import {mapState,mapMutations,mapActions,mapGetters} from 'vuex';
+  import {mapMutations} from 'vuex';
   export default{
     data(){
       return {
@@ -45,6 +45,7 @@
       this.init();
     },
     methods   : {
+      ...mapMutations(['HideLoading']),
       init(){
         this.getHotRecommend()
       },
@@ -72,6 +73,7 @@
               _this.$refs.slide.init();
               _this.$refs.mvScroll.init();
               _this.$refs.scrollContent.init();
+              _this.HideLoading();
             }, 200)
           })
 

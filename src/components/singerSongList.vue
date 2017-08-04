@@ -96,7 +96,9 @@
     },
     methods   : {
       ...mapActions(['dispatchcgflae']),
+      ...mapMutations(['HideLoading','ShowLoading']),
       init(){
+        this.ShowLoading();
         this.getSongList();
         this.getMvList();
         this.$refs.slide.init();
@@ -149,6 +151,7 @@
               this.curScrollY[i] = -(this.$refs.listCover.clientHeight - this.$refs.head.clientHeight - this.$refs.headTab.clientHeight);
             }
             setTimeout(() => {
+                this.HideLoading();
               fonts(() => {
                 this.$refs.scroll.init();
               });

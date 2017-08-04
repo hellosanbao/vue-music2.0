@@ -35,6 +35,7 @@
   import {recommend, options} from '@/apiConfig';
   import scroll from 'components/base/scroll';
   import $ from 'jquery'
+  import {mapMutations} from 'vuex'
   export default{
     data(){
       return {
@@ -96,7 +97,9 @@
       }
     },
     methods   : {
+      ...mapMutations(['HideLoading','ShowLoading']),
       init(){
+        this.ShowLoading();
         this.getSingerList();
       },
       //拼接图片地址
@@ -125,6 +128,7 @@
           _this.$nextTick(() => {
             _this.$refs.scrollWrap.init();
             _this.calcHeight();
+            -this.HideLoading();
 //            console.log(this.formatSingerList)
           })
         })

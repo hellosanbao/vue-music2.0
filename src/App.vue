@@ -11,8 +11,8 @@
       <router-view name="win"></router-view>
     </transition>
     <collect v-if="isShowMySongList"></collect>
-
     <player></player>
+    <loading v-if="isShowLoading"></loading>
   </div>
 </template>
 
@@ -21,18 +21,20 @@
   import homeNav from 'components/homeNav';
   import player from 'components/player/player';
   import collect from 'components/base/collect';
+  import loading from 'components/base/loading'
   import {mapState} from 'vuex'
 
   export default {
     name      : 'app',
     computed  : {
-      ...mapState(['isShowMySongList'])
+      ...mapState(['isShowMySongList','isShowLoading'])
     },
     components: {
       mHeader,
       homeNav,
       player,
-      collect
+      collect,
+      loading
     }
   }
 </script>

@@ -1,6 +1,10 @@
 <template>
   <div class = "player-content">
-    <transition name="slideInRight">
+    <transition name="slideInRight"
+                @enter="enter"
+                @after-enter="afterEnter"
+                @leave="leave"
+                @after-leave="afterLeave">
       <div class = "full-play" v-if = "fullPlay">
         <div class = "full-content">
           <div class = "full-bg" :style = "bgPic"></div>
@@ -13,7 +17,7 @@
             </div>
             <div class = "singer" v-html="singers"></div>
           </div>
-          <div class = "player-cover" :class="{active:isPlay}">
+          <div ref="cdWrapper" class = "player-cover" :class="{active:isPlay}">
             <img :src = "pic" alt = "">
           </div>
           <div class="bottom">
@@ -67,6 +71,7 @@
 <script>
   import {mapState, mapMutations} from 'vuex';
   import {musicData} from 'common/js/base';
+  import animations from 'create-keyframe-animation';
   export default{
     data(){
       return {
@@ -114,6 +119,28 @@
     },
     methods : {
       ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType','toggleShowMySongList','openfullPlay','AddToMySongList','delFromMySongList']),
+      enter(){
+        const {x, y, scale} = {x:0,y:0,scale:0.5}
+        let animation = {
+          0: {
+            transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+          },
+          60: {
+            transform: `translate3d(0,0,0) scale(1.1)`
+          },
+          100: {
+            transform: `translate3d(0,0,0) scale(1)`
+          }
+        }
+        animations.registerAnimation({
+          name: 'move',
+          animation,
+        })
+        animations.runAnimation(this.$refs.cdWrapper, 'move', function(){console.log(1)})
+      },
+      afterEnter(){},
+      leave(){},
+      afterLeave(){},
       play(){
         this.changePlayeState(true);
       },

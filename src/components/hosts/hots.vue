@@ -28,6 +28,7 @@
   import jsonp from 'common/js/jsonp';
   import {recommend, options} from '@/apiConfig';
   import scroll from 'components/base/scroll';
+  import {mapMutations} from 'vuex'
     export default{
         data(){
             return {
@@ -38,8 +39,10 @@
            this.init();
         },
         methods: {
+          ...mapMutations(['HideLoading','ShowLoading']),
             init(){
-                this.getTopList()
+              this.ShowLoading();
+              this.getTopList();
             },
           getTopList(){
                 var _this=this;
@@ -56,6 +59,7 @@
               _this.topList=res.data.topList;
               setTimeout(()=>{
                 _this.$refs.topSongList.init();
+                _this.HideLoading();
               },100)
             })
           }

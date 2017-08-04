@@ -5,7 +5,8 @@
 <script>
   import jsonp from 'common/js/jsonp';
   import {recommend, options} from '@/apiConfig';
-  import listView from 'components/base/listView'
+  import listView from 'components/base/listView';
+  import {mapMutations} from 'vuex';
     export default{
         data(){
             return {
@@ -17,8 +18,10 @@
             this.init();
         },
         methods: {
+          ...mapMutations(['HideLoading','ShowLoading']),
             init(){
-                this.getRecommendList();
+              this.ShowLoading();
+              this.getRecommendList();
             },
             getRecommendList(){
                 let url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg';
@@ -34,7 +37,8 @@
                 })
               jsonp(url, data, {param:'callback',prefix:'callback'}).then((res) => {
                 this.pic=`background:url(${res.cdlist[0].logo}) no-repeat center top/100% auto #fff`
-                  this.recommendList=this.recommendList.concat(res.cdlist[0].songlist);
+                this.recommendList=this.recommendList.concat(res.cdlist[0].songlist);
+                this.HideLoading();
               })
 
             }
