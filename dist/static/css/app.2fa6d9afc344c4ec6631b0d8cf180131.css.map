@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/components/base/slider.vue"],"names":[],"mappings":"AACA,sBACE,oBAA0B","file":"static/css/app.2fa6d9afc344c4ec6631b0d8cf180131.css","sourcesContent":["\nbody[data-v-c0252628] {\n  background-color: #ff0000;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./src/components/base/slider.vue"],"sourceRoot":""}
