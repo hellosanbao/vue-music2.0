@@ -84,8 +84,9 @@ import {mapActions,mapState,mapMutations} from 'vuex'
     },
     methods : {
       ...mapActions(['dispatchcgflae']),
-      ...mapMutations(['addToSongList','AddToMySongList','addHistoryKey','delFromHistory','clearHistory']),
+      ...mapMutations(['addToSongList','AddToMySongList','addHistoryKey','delFromHistory','clearHistory','HideLoading','ShowLoading']),
       init(){
+        this.ShowLoading();
         this.getHotList();
       },
       addCollect(song){
@@ -121,6 +122,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
           _:1501636107028,
         })
         jsonp(url,datas,options).then((res)=>{
+            this.HideLoading();
             this.hotList=res.data.hotkey.splice(0,15);
         })
       },

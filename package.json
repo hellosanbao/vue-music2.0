@@ -18,7 +18,8 @@
     "vue-lazyload": "1.0.3",
     "jquery": "^3.2.1",
     "vuex":"^2.3.1",
-    "better-scroll": "^0.4.0"
+    "better-scroll": "^0.4.0",
+    "create-keyframe-animation":"^0.1.0"
   },
   "devDependencies": {
     "sass-loader": "^6.0.6",

@@ -4,6 +4,8 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 //===================================================================state
 const state = {
+  //是否显示loading
+  isShowLoading:true,
   //是否全屏显示播放器
   fullPlay: false,
   //当前歌曲信息
@@ -27,6 +29,12 @@ const state = {
 
 //===================================================================mutations
 const mutations = {
+  ShowLoading(state){
+    state.isShowLoading=true;
+  },
+  HideLoading(state){
+    state.isShowLoading=false;
+  },
   //选择歌曲
   selectPlaySong(state,songMsg) {
     state.songMsg=songMsg;
