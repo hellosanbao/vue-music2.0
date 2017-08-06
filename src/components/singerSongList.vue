@@ -32,10 +32,14 @@
                   <li class="item flex-warp flex-middle"
                       v-for="(song,index) in songList"
                       @click="selectPlay(song,songList,index)">
-                    <div>
+                    <div class="flex-con">
                       <div class="name">{{song.musicData.songname}}</div>
                       <div class="author"><span v-for="singer in song.musicData.singer">{{singer.name}} </span>
                       </div>
+                    </div>
+                    <div class="ctrl">
+                      <i class="iconfont icon-add" @click.stop="addPlayList(song)"></i>
+                      <i class="iconfont icon-aixin" :class="{active:song.isCollect}" @click.stop="addCollect(song)"></i>
                     </div>
                   </li>
                 </ul>
@@ -69,7 +73,7 @@
   import {fonts, prefixStyle, musicData} from 'common/js/base';
   import {recommend, options} from '@/apiConfig';
   import $ from 'jquery';
-  import {mapMutations, mapActions} from 'vuex';
+  import {mapMutations, mapActions,mapGetters} from 'vuex';
 
   const transform = prefixStyle('transform');
   const backdrop = prefixStyle('filter');
@@ -94,9 +98,12 @@
     mounted(){
       this.init();
     },
+    computed:{
+      ...mapGetters(['myCollectIds'])
+    },
     methods   : {
-      ...mapActions(['dispatchcgflae']),
-      ...mapMutations(['HideLoading','ShowLoading']),
+      ...mapActions(['dispatchcgflae','initDilog']),
+      ...mapMutations(['HideLoading','ShowLoading','AddToMySongList','addToSongList']),
       init(){
         this.ShowLoading();
         this.getSongList();
@@ -124,6 +131,16 @@
           this.$refs.scroll.scrollTo(0, this.curScrollY[this.slideIndex], 0, true);
         }
       },
+      addCollect(song){
+        song.isCollect=!song.isCollect;
+        var songMsg=musicData(song);
+        this.AddToMySongList(songMsg);
+      },
+      addPlayList(song){
+        var songMsg=musicData(song);
+        this.addToSongList(songMsg);
+        this.initDilog({msg:'已添加到播放列表'})
+      },
       getSongList(){
         let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'
         let data = Object.assign({}, recommend, {
@@ -144,6 +161,12 @@
             let pic = `https://y.gtimg.cn/music/photo_new/T001R300x300M000${res.data.singer_mid}.jpg?max_age=2592000`;
             this.singerPic = `background:url(${pic}) no-repeat center top/100% auto #fff`;
             this.songList = this.songList.concat(res.data.list);
+            this.songList.forEach((el)=>{
+                this.$set(el,'isCollect',false);
+                if(this.myCollectIds.indexOf(musicData(el).songid)>=0){
+                    el.isCollect=true;
+                }
+            })
             //坐标相关计算
             this.top = `${this.$refs.listCover.clientHeight}px`;
             this.$refs.headTab.style.top = `${parseInt(this.top) - this.$refs.headTab.clientHeight}px`;
@@ -309,6 +332,18 @@
               font-size: $font-size-medium;
               color: $color-text-l;
               margin-top: 0.3rem;
+            }
+            .ctrl{
+              .iconfont{
+                color: $color-text-i;
+                @include extend-click();
+                &.icon-aixin{
+                  margin-left: 2rem;
+                  &.active{
+                    color: #d93f30;
+                  }
+                }
+              }
             }
           }
         }

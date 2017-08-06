@@ -13,6 +13,7 @@
     <collect v-if="isShowMySongList"></collect>
     <player></player>
     <loading v-if="isShowLoading"></loading>
+    <dilog :type="dilogType" :msg="dioMsg" v-if="isShowDilog"></dilog>
   </div>
 </template>
 
@@ -21,20 +22,22 @@
   import homeNav from 'components/homeNav';
   import player from 'components/player/player';
   import collect from 'components/base/collect';
-  import loading from 'components/base/loading'
-  import {mapState} from 'vuex'
+  import loading from 'components/base/loading';
+  import {mapState} from 'vuex';
+  import dilog from 'components/base/dilog';
 
   export default {
     name      : 'app',
     computed  : {
-      ...mapState(['isShowMySongList','isShowLoading'])
+      ...mapState(['isShowMySongList','isShowLoading','dilogType','dioMsg','isShowDilog'])
     },
     components: {
       mHeader,
       homeNav,
       player,
       collect,
-      loading
+      loading,
+      dilog
     }
   }
 </script>

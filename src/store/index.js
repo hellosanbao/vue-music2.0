@@ -24,11 +24,21 @@ const state = {
   isShowMySongList:false,
   //历史搜索
   historyKeyword:window.localStorage.getItem('historyKeyword')?window.localStorage.getItem('historyKeyword').split(','):[],
-
+  //弹框类型 toast , alert
+  dilogType:'alert',
+  dioMsg:'操作成功',
+  isShowDilog:false,
+  dilogFunc:null,
 }
 
 //===================================================================mutations
 const mutations = {
+  hideDilog(state){
+    state.isShowDilog=false;
+    if(state.dilogFunc instanceof Function){
+      state.dilogFunc()
+    }
+  },
   ShowLoading(state){
     state.isShowLoading=true;
   },
@@ -107,8 +117,6 @@ const mutations = {
     })
     if(flg) {
       state.songList.push(song);
-    }else{
-      alert('该歌曲已经在播放列表中了')
     }
   },
   //播放列表中删除
@@ -159,6 +167,21 @@ const actions = {
     commit('changeCurSongIndex',index);
     commit('changeSongList',songList);
     state.isShowMySongList=false;
+  },
+  initDilog({state,commit},options){
+    let defaultopt={type:'toast',msg:'操作成功',duration:500};
+    let param=Object.assign({},defaultopt,options || {});
+    state.dilogType=param.type;
+    state.dioMsg=param.msg;
+    state.isShowDilog=true;
+    if(state.dilogType==='toast'){
+      setTimeout(()=>{
+        state.isShowDilog=false;
+      },param.duration)
+    }
+    if(state.dilogType==='alert'){
+      state.dilogFunc=param.func;
+    }
   }
 }
 
@@ -166,6 +189,13 @@ const actions = {
 const getters = {
   resfullPlay(state){
     return state.flae;
+  },
+  myCollectIds(state){
+    var arr=[];
+    state.mySongList.forEach((el)=>{
+      arr.push(el.songid)
+    })
+    return arr;
   }
 }
 

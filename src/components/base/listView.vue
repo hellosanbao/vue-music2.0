@@ -1,5 +1,5 @@
 <template>
-  <div class="singerSongList">
+  <div class="singerSongList" @click="hideCtrl">
     <div class="head" ref="head">
       <div class="head-content flex-warp flex-middle">
         <i class="iconfont icon-Prev" onclick="history.go(-1)"></i>
@@ -22,19 +22,31 @@
           <div class="swiper-slide">
             <div class="list-content">
               <ul class="list">
-                <li class="item" v-for="(data,index) in datalist" @click="selectPlay(data,datalist,index)">
+                <li class="item" v-for="(data,index) in resdatalist" @click="selectPlay(data,datalist,index)">
                   <div class="flex-warp flex-middle">
                     <div class="flex-con">
                       <div class="name">{{data.songname}}</div>
                       <div class="author"><span>{{singerStr(data.singer)}}</span></div>
                     </div>
-                    <div class="list-edit"><i class="iconfont icon-gengduo"></i></div>
+                    <div class="list-edit" @click.stop="showCtrl(data)"><i class="iconfont icon-gengduo"></i></div>
                   </div>
-                  <div class="edit-warp flex-warp flex-middle" v-if="false">
-                    <div class="edit-item"><i class="iconfont icon-add"></i> <br>添加</div>
-                    <div class="edit-item"><i class="iconfont icon-aixin"></i> <br>收藏</div>
-                    <div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>
-                  </div>
+                  <transition name="slideInRight">
+                    <div class="edit-warp flex-warp flex-middle" v-if="data.isShowCtrl" @click.stop>
+                      <div class="left flex-warp flex-middle flex-con">
+                        <div class="edit-item">
+                          <i class="iconfont icon-add" @click.stop="addPlayList(data)"></i> <br>添加
+                         </div>
+                        <div class="edit-item" :class="{active:data.isCollect}"
+                                                @click.stop="addCollect(data)">
+                          <i class="iconfont icon-aixin"></i> <br>收藏
+                        </div>
+                        <div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>
+                      </div>
+                      <div class="right flex-warp flex-middle" @click="data.isShowCtrl=false">
+                        <i class="iconfont icon-close"></i>
+                      </div>
+                    </div>
+                  </transition>
                 </li>
               </ul>
             </div>
@@ -48,7 +60,7 @@
 <script>
   import scroll from 'components/base/scroll';
   import {fonts, prefixStyle,gdMusicData} from 'common/js/base';
-  import {mapActions} from 'vuex';
+  import {mapActions,mapGetters,mapMutations} from 'vuex';
   import $ from 'jquery';
 
   const transform = prefixStyle('transform');
@@ -87,8 +99,24 @@
         this.init();
       })
     },
+    computed:{
+      ...mapGetters(['myCollectIds']),
+      resdatalist(){
+        this.datalist.forEach((el)=>{
+          if(el.isShowCtrl===undefined){
+            this.$set(el,'isShowCtrl',false);
+            this.$set(el,'isCollect',false);
+          }
+          if(this.myCollectIds.indexOf(el.songid)>=0){
+              el.isCollect=true;
+          }
+        })
+        return this.datalist;
+      }
+    },
     methods   : {
-      ...mapActions(['dispatchcgflae']),
+      ...mapActions(['dispatchcgflae','initDilog']),
+      ...mapMutations(['AddToMySongList','addToSongList']),
       init(){
         this.top = `${this.$refs.listCover.clientHeight}px`;
         fonts(() => {
@@ -100,6 +128,25 @@
           });
         }, 200)
 
+      },
+      addCollect(song){
+        song.isCollect=!song.isCollect;
+        var songMsg=gdMusicData(song);
+        this.AddToMySongList(songMsg);
+      },
+      addPlayList(song){
+        var songMsg=gdMusicData(song);
+        this.addToSongList(songMsg);
+        this.initDilog({msg:'已添加到播放列表'})
+      },
+      showCtrl(data){
+          this.hideCtrl();
+          data.isShowCtrl=true;
+      },
+      hideCtrl(){
+        this.datalist.forEach((el)=>{
+          el.isShowCtrl=false;
+        })
       },
       singerStr(data){
           var arr =[];
@@ -122,6 +169,7 @@
     },
     watch     : {
       scrollY(newVal){
+        this.hideCtrl();
         let warp = this.$refs.listCover.clientHeight - this.$refs.head.clientHeight;
         var opactiy = -newVal / warp > 1 ? 1 : -newVal / warp;
         this.$refs.head.style.background = `rgba(255,255,255,${opactiy})`;
@@ -247,19 +295,35 @@
             padding-right: 1rem;
             margin-left: 1rem;
             position: relative;
+            .list-edit{
+              @include extend-click();
+              .iconfont{
+                font-size: 1.2rem;
+                color: $color-text-i;
+              }
+            }
             .edit-warp {
               height: 5rem;
               background-color: #fff;
               position: absolute;
               left: -1rem;
-              top: 100%;
+              top: 0;
               width: calc(100% + 1rem);
               z-index: 10;
               box-shadow: 0 1px 10px 1px rgba(0, 0, 0, .1);
+              .right{
+                padding: 0 1rem;
+                @include extend-click();
+              }
               .edit-item {
                 width: 5rem;
                 text-align: center;
                 color: $color-text-i;
+                &.active{
+                  .iconfont{
+                    color: #d93f30;
+                  }
+                }
               }
             }
             .name {
@@ -314,5 +378,19 @@
         }
       }
     }
+  }
+  .slideInRight-enter-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-leave-active {
+    transition: all .3s ease;
+  }
+  .slideInRight-enter
+    /* .slide-fade-leave-active for below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  .slideInRight-leave-to{
+    opacity: 0;
   }
 </style>

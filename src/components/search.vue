@@ -44,7 +44,7 @@
               <p class="songname" v-html="res.songname"></p>
               <p class="singername" v-html="singer(res.singer)"></p>
             </div>
-            <div class="collect" @click.stop="addMyCollect(res)"><i class="iconfont icon-aixin"></i></div>
+            <div class="collect" :class="{active:res.isCollect}" @click.stop="addMyCollect(res)"><i class="iconfont icon-aixin"></i></div>
             <div class="add" @click.stop="addCollect(res)"><i class="iconfont icon-add"></i></div>
           </li>
         </ul>
@@ -71,19 +71,26 @@ import {mapActions,mapState,mapMutations} from 'vuex'
       }
     },
     computed: {
-      ...mapState(['curSongIndex','historyKeyword']),
+      ...mapState(['curSongIndex','historyKeyword','mySongList']),
       showRes(){
         return this.resList.length > 0;
       },
       showCancle(){
         return this.resList.length > 0;
+      },
+      CollectId(){
+          let arr=[];
+          this.mySongList.forEach((el)=>{
+              arr.push(el.songid);
+          })
+        return arr;
       }
     },
     mounted(){
         this.init();
     },
     methods : {
-      ...mapActions(['dispatchcgflae']),
+      ...mapActions(['dispatchcgflae','initDilog']),
       ...mapMutations(['addToSongList','AddToMySongList','addHistoryKey','delFromHistory','clearHistory','HideLoading','ShowLoading']),
       init(){
         this.ShowLoading();
@@ -94,8 +101,15 @@ import {mapActions,mapState,mapMutations} from 'vuex'
         this.addToSongList(songMsg);
       },
       addMyCollect(song){
+        song.isCollect=!song.isCollect;
         var songMsg=gdMusicData(song);
         this.AddToMySongList(songMsg);
+        if(song.isCollect){
+          this.initDilog({msg:'已添加到收藏'})
+        }else{
+          this.initDilog({msg:'已取消收藏'})
+        }
+
       },
       selectSong(song,index){
         var songMsg=gdMusicData(song);
@@ -165,6 +179,12 @@ import {mapActions,mapState,mapMutations} from 'vuex'
         jsonp(url,datas,options).then((res)=>{
           this.resList=res.data.song.list;
           this.zhida=res.data.zhida;
+          this.resList.forEach((el,ind)=>{
+            this.$set(el,'isCollect',false);
+            if(this.CollectId.indexOf(el.songid)>=0){
+                el.isCollect=true;
+            }
+          })
         })
       }
     },
@@ -308,6 +328,11 @@ import {mapActions,mapState,mapMutations} from 'vuex'
             .iconfont{
               color: $color-text-d;
               @include extend-click();
+            }
+            &.active{
+              .iconfont{
+                color: #d93f30;
+              }
             }
           }
         }

@@ -30,6 +30,13 @@
           this.dispatchcgflae({songMsg:song,songList:this.songList,index})
         }
       },
+      mounted(){
+        this.songList.forEach((el,i)=>{
+          if(el.songid===this.songMsg.songid){
+            this.changeCurSongIndex(i)
+          }
+        })
+      },
       watch:{
         songList(nval){
             nval.forEach((el,i)=>{

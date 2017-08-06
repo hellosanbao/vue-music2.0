@@ -1,10 +1,7 @@
 <template>
   <div class = "player-content">
     <transition name="slideInRight"
-                @enter="enter"
-                @after-enter="afterEnter"
-                @leave="leave"
-                @after-leave="afterLeave">
+                @enter="enter">
       <div class = "full-play" v-if = "fullPlay">
         <div class = "full-content">
           <div class = "full-bg" :style = "bgPic"></div>
@@ -53,7 +50,7 @@
     <transition name="slideInUp">
       <div class="mini-play" v-if = "!fullPlay" @click="openfullPlay">
         <div class="mini-play-content  flex-warp flex-middle">
-          <div class="avat" :class="{active:isPlay}"><img :src="pic" alt=""></div>
+          <div ref="miniCover" class="avat" :class="{active:isPlay}"><img :src="pic" alt=""></div>
           <div class="msg flex-con">
             <p class="name" v-html="songMsg.songname"></p>
             <p class="singer" v-html="singers"></p>
@@ -79,6 +76,7 @@
         playedProportion: 0, //进度条百分比
         Proportion      : 0, //进度条比例
         touchBtn        : false, //是否按住range按钮
+        posData:{},
       }
     },
     computed: {
@@ -120,13 +118,14 @@
     methods : {
       ...mapMutations(['closeFullPlay', 'changePlayeState', 'changeCurSongIndex', 'selectPlaySong','cheangePlayType','toggleShowMySongList','openfullPlay','AddToMySongList','delFromMySongList']),
       enter(){
-        const {x, y, scale} = {x:0,y:0,scale:0.5}
+        this._getCdPos()
+        const {x, y, scale} = this.posData;
         let animation = {
           0: {
-            transform: `translate3d(${x}px,${y}px,0) scale(${scale})`
+            transform: `translate3d(${-x}px,${y}px,0) scale(${scale})`
           },
           60: {
-            transform: `translate3d(0,0,0) scale(1.1)`
+            transform: `translate3d(0px,0px,0) scale(1.1)`
           },
           100: {
             transform: `translate3d(0,0,0) scale(1)`
@@ -135,12 +134,30 @@
         animations.registerAnimation({
           name: 'move',
           animation,
+          presets: {
+            duration: 600,
+            easing: 'linear'
+          }
         })
-        animations.runAnimation(this.$refs.cdWrapper, 'move', function(){console.log(1)})
+        animations.runAnimation(this.$refs.cdWrapper, 'move',()=>{
+          animations.unregisterAnimation('move');
+          this.$refs.cdWrapper.style.animation = '';
+        })
       },
-      afterEnter(){},
-      leave(){},
+      leave(){
+        this.$refs.cdWrapper.style.transition = 'all .3s';
+        const {x, y, scale} = this.posData;
+        this.$refs.cdWrapper.style.webkitTransform = `translate3d(${x}px,${y}px,0) scale(${scale})`;
+      },
       afterLeave(){},
+      _getCdPos(){
+          let W=this.$refs.cdWrapper.clientWidth;
+          let w=this.$refs.miniCover.clientWidth;
+          let x=this.$refs.cdWrapper.getBoundingClientRect().left-this.$refs.miniCover.getBoundingClientRect().left+(W-w)/2;
+          let y=this.$refs.miniCover.getBoundingClientRect().top-this.$refs.cdWrapper.getBoundingClientRect().top-(W-w)/2;
+          let scale=this.$refs.miniCover.clientWidth/this.$refs.cdWrapper.clientWidth;
+          this.posData={x,y,scale}
+      },
       play(){
         this.changePlayeState(true);
       },
@@ -469,10 +486,13 @@
   }
 
   .slideInRight-enter-active,.slideInRight-leave-active {
-    transition: all .3s ;
+    transition: all .6s ;
     .top, .bottom{
       transition: all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32);
     }
+  }
+  .slideInRight-leave-active{
+    transition: all 1s ;
   }
   .slideInRight-enter, .slideInRight-leave-to{
     opacity: 0;
@@ -482,6 +502,9 @@
   .bottom{
     transform: translate3d(0, 100px, 0)
   }
+  }
+  .slideInRight-leave-to{
+    transform: scale(1.3);
   }
   .slideInUp-enter-active,.slideInUp-leave-active{
     transition: all .3s ;
