@@ -55,7 +55,12 @@
             <p class="name" v-html="songMsg.songname"></p>
             <p class="singer" v-html="singers"></p>
           </div>
-          <div class="progress"></div>
+          <div class="progress">
+            <div class="icon flex-warp flex-center flex-middle" @click.stop= "changePlayeState(!isPlay)">
+              <i class="iconfont" :class="{'icon-zanting':isPlay,'icon-bofang':!isPlay}"></i>
+            </div>
+            <arc-progress :PI="PI"></arc-progress>
+          </div>
           <div class = "menu" @click.stop="toggleShowMySongList"><i class = "iconfont icon-bflb"></i></div>
         </div>
       </div>
@@ -69,6 +74,7 @@
   import {mapState, mapMutations} from 'vuex';
   import {musicData} from 'common/js/base';
   import animations from 'create-keyframe-animation';
+  import arcProgress from 'components/base/arcProgress.vue';
   export default{
     data(){
       return {
@@ -81,6 +87,9 @@
     },
     computed: {
       ...mapState(['fullPlay', 'songMsg', 'isPlay', 'songList', 'curSongIndex','palyTypeArr','playType','mySongList']),
+      PI(){
+         return Math.PI*2*(this.curTime / this.songMsg.interval);
+      },
       isCollect(){
           var c = false;
           this.mySongList.forEach((el)=>{
@@ -281,6 +290,9 @@
           this.$refs.audioplay.pause();
         }
       }
+    },
+    components:{
+      arcProgress
     }
   }
 </script>
@@ -454,8 +466,11 @@
         border-radius: 50%;
         border: 2px solid #d7d7d7;
         overflow: hidden;
+        animation: rot 20s infinite linear;
+        animation-play-state:paused;
         &.active {
-          animation: rot 20s infinite linear;
+          animation-play-state:running;
+          /*animation: rot 20s infinite linear;*/
         }
         img{
           display: block;
@@ -474,6 +489,21 @@
         font-size: 1rem;
       }
     }
+      .progress{
+        margin-right: 1rem;
+        position: relative;
+        .icon{
+          position: absolute;
+          left: 0;
+          top:0;
+          width: 100%;
+          height:100%;
+          z-index: 10;
+          .iconfont:before{
+            vertical-align: middle;
+          }
+        }
+      }
       .menu{
         .iconfont{
           @include extend-click();
