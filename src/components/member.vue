@@ -4,7 +4,7 @@
       <div class = "header">
         <div class = "left" onclick="history.go(-1)"><i class = "iconfont icon-Prev"></i></div>
         <div class = "logo flex-con flex-warp flex-middle flex-center">我的收藏</div>
-        <div class = "right" @click="clearMySongList"><i class = "iconfont icon-ljt"></i></div>
+        <div class = "right" @click="clear" v-if="mySongList.length"><i class = "iconfont icon-ljt"></i></div>
       </div>
     </div>
     <div class="collect-list">
@@ -49,6 +49,17 @@
               index
             })
           },
+          clear(){
+            var _this=this;
+            layer.open({
+              content: '确定要清空收藏吗？'
+              ,btn: ['清空', '再想想']
+              ,yes: function(index){
+                _this.clearMySongList();
+                layer.close(index);
+              }
+            });
+          }
         }
     }
 </script>

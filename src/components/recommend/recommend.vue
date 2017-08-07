@@ -38,16 +38,14 @@
         isLoadingEnd:false
       }
     },
-//    updated(){
-//      this.$refs.scrollContent.refresh();
-//    },
     mounted(){
       this.init();
     },
     methods   : {
-      ...mapMutations(['HideLoading']),
+      ...mapMutations(['HideLoading','ShowLoading']),
       init(){
-        this.getHotRecommend()
+        this.getHotRecommend();
+        this.ShowLoading();
       },
       //获取数据
       getHotRecommend(){

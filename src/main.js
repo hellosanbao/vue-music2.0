@@ -7,6 +7,8 @@ import store from './store'
 import 'common/js/base'
 import '@/filter'
 import 'common/css/index'
+import 'common/js/layer'
+import 'common/css/layer'
 import vueLayLoad from 'vue-lazyload';
 Vue.config.productionTip = false
 

@@ -5,7 +5,7 @@ Vue.use(Vuex);
 //===================================================================state
 const state = {
   //是否显示loading
-  isShowLoading:true,
+  isShowLoading:false,
   //是否全屏显示播放器
   fullPlay: false,
   //当前歌曲信息
@@ -25,20 +25,10 @@ const state = {
   //历史搜索
   historyKeyword:window.localStorage.getItem('historyKeyword')?window.localStorage.getItem('historyKeyword').split(','):[],
   //弹框类型 toast , alert
-  dilogType:'alert',
-  dioMsg:'操作成功',
-  isShowDilog:false,
-  dilogFunc:null,
 }
 
 //===================================================================mutations
 const mutations = {
-  hideDilog(state){
-    state.isShowDilog=false;
-    if(state.dilogFunc instanceof Function){
-      state.dilogFunc()
-    }
-  },
   ShowLoading(state){
     state.isShowLoading=true;
   },
@@ -94,6 +84,7 @@ const mutations = {
   delFromMySongList(state,index){
     state.mySongList.splice(index,1)
     window.localStorage.setItem('mySongList',JSON.stringify(state.mySongList))
+    layer.open({content: '删除成功',skin: 'msg',time: 1});
   },
   //清空我的收藏
   clearMySongList(state){
@@ -104,7 +95,10 @@ const mutations = {
     if(state.songList.length>0){
       state.isShowMySongList=!state.isShowMySongList;
     }else{
-      alert('还没有收藏')
+      layer.open({
+        content: '还没有收藏哦~'
+        ,btn: '我知道了'
+      });
     }
   },
   //添加到播放列表
@@ -115,6 +109,7 @@ const mutations = {
         flg=false;
       }
     })
+    layer.open({content: '已添到播放列表',skin: 'msg',time: 1});
     if(flg) {
       state.songList.push(song);
     }
@@ -123,8 +118,12 @@ const mutations = {
   delFromSongList(state,index){
     if(index!==state.curSongIndex){
       state.songList.splice(index,1)
+      layer.open({content: '删除成功',skin: 'msg',time: 1});
     }else{
-      alert('该歌曲正在播放，无法删除')
+      layer.open({
+        content: '该歌曲正在播放，无法删除'
+        ,btn: '我知道了'
+      });
     }
   },
   //清空播放列表
@@ -167,21 +166,6 @@ const actions = {
     commit('changeCurSongIndex',index);
     commit('changeSongList',songList);
     state.isShowMySongList=false;
-  },
-  initDilog({state,commit},options){
-    let defaultopt={type:'toast',msg:'操作成功',duration:500};
-    let param=Object.assign({},defaultopt,options || {});
-    state.dilogType=param.type;
-    state.dioMsg=param.msg;
-    state.isShowDilog=true;
-    if(state.dilogType==='toast'){
-      setTimeout(()=>{
-        state.isShowDilog=false;
-      },param.duration)
-    }
-    if(state.dilogType==='alert'){
-      state.dilogFunc=param.func;
-    }
   }
 }
 

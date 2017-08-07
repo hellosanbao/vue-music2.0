@@ -102,7 +102,7 @@
       ...mapGetters(['myCollectIds'])
     },
     methods   : {
-      ...mapActions(['dispatchcgflae','initDilog']),
+      ...mapActions(['dispatchcgflae']),
       ...mapMutations(['HideLoading','ShowLoading','AddToMySongList','addToSongList']),
       init(){
         this.ShowLoading();
@@ -139,7 +139,6 @@
       addPlayList(song){
         var songMsg=musicData(song);
         this.addToSongList(songMsg);
-        this.initDilog({msg:'已添加到播放列表'})
       },
       getSongList(){
         let url = 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_singer_track_cp.fcg'

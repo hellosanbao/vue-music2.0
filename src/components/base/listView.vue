@@ -40,7 +40,7 @@
                                                 @click.stop="addCollect(data)">
                           <i class="iconfont icon-aixin"></i> <br>收藏
                         </div>
-                        <div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>
+                        <!--<div class="edit-item"><i class="iconfont icon-ljt"></i> <br>删除</div>-->
                       </div>
                       <div class="right flex-warp flex-middle" @click="data.isShowCtrl=false">
                         <i class="iconfont icon-close"></i>
@@ -115,7 +115,7 @@
       }
     },
     methods   : {
-      ...mapActions(['dispatchcgflae','initDilog']),
+      ...mapActions(['dispatchcgflae']),
       ...mapMutations(['AddToMySongList','addToSongList']),
       init(){
         this.top = `${this.$refs.listCover.clientHeight}px`;
@@ -137,7 +137,6 @@
       addPlayList(song){
         var songMsg=gdMusicData(song);
         this.addToSongList(songMsg);
-        this.initDilog({msg:'已添加到播放列表'})
       },
       showCtrl(data){
           this.hideCtrl();

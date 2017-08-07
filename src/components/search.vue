@@ -90,7 +90,7 @@ import {mapActions,mapState,mapMutations} from 'vuex'
         this.init();
     },
     methods : {
-      ...mapActions(['dispatchcgflae','initDilog']),
+      ...mapActions(['dispatchcgflae']),
       ...mapMutations(['addToSongList','AddToMySongList','addHistoryKey','delFromHistory','clearHistory','HideLoading','ShowLoading']),
       init(){
         this.ShowLoading();
@@ -105,9 +105,9 @@ import {mapActions,mapState,mapMutations} from 'vuex'
         var songMsg=gdMusicData(song);
         this.AddToMySongList(songMsg);
         if(song.isCollect){
-          this.initDilog({msg:'已添加到收藏'})
+          layer.open({content: '已添加收藏',skin: 'msg',time: 1});
         }else{
-          this.initDilog({msg:'已取消收藏'})
+          layer.open({content: '已取消收藏',skin: 'msg',time: 1});
         }
 
       },

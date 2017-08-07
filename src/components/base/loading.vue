@@ -26,7 +26,7 @@
 
 <style scoped lang = 'scss' rel = 'stylesheet/scss'>
   @import "~common/css/base";
-  @import "~common/css/loaders";
+  @import "~common/css/loaders.css";
     .loading{
       position: fixed;
       left: 0;
