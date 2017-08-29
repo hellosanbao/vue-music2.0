@@ -1,6 +1,6 @@
 <template>
     <div class="arcPregress">
-      <canvas ref="can"></canvas>
+      <canvas ref="can" style="width: 30px;height: 30px"></canvas>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
         props:{
           R:{
               type:Number,
-              default:30
+              default:300
           },
           PI:{
               type:Number,
@@ -35,7 +35,7 @@
             let ctx=this.$refs.can.getContext('2d');
             let r=this.R;
             ctx.beginPath();
-            ctx.lineWidth=1;
+            ctx.lineWidth=10;
             ctx.arc(r/2,r/2,(r-6)/2,0,Math.PI*2);
             ctx.stroke();
           },
@@ -46,7 +46,7 @@
             ctx.clearRect(0,0,r,r);
             this.cir()
             ctx.beginPath();
-            ctx.lineWidth=2;
+            ctx.lineWidth=20;
             ctx.arc(r/2,r/2,(r-4)/2,-Math.PI/2,pi);
             ctx.stroke();
           }
