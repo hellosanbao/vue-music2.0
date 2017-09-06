@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="list-cover" ref="listCover" :style="pic">
-      <div class="play-rand"><i class="iconfont icon-play-song"></i>随机播放全部</div>
+      <div class="play-rand" @click="rondomplay"><i class="iconfont icon-play-song"></i>随机播放全部</div>
     </div>
     <div class="head-tab flex-warp" ref="headTab" v-show="false"></div>
     <scroll :top="top" ref="scroll"
@@ -116,7 +116,7 @@
     },
     methods   : {
       ...mapActions(['dispatchcgflae']),
-      ...mapMutations(['AddToMySongList','addToSongList']),
+      ...mapMutations(['AddToMySongList','addToSongList','changeCurSongIndex']),
       init(){
         this.top = `${this.$refs.listCover.clientHeight}px`;
         fonts(() => {
@@ -164,6 +164,13 @@
       },
       centerScroll(pos){
         this.scrollY = pos.y;
+      },
+      //随机播放全部
+      rondomplay(){
+        var index = 2;
+        var song = this.resdatalist[index];
+        this.dispatchcgflae({songMsg:song,songList:this.resdatalist,index})
+        this.changeCurSongIndex(index);
       }
     },
     watch     : {
