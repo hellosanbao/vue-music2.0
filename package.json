@@ -13,12 +13,18 @@
     "vue": "^2.3.3",
     "vue-router": "^2.6.0",
     "swiper": "^3.4.2",
-    "jsonp": "^0.2.1",
+    "jsonp":"^0.2.1",
     "axios": "^0.16.2",
     "vue-lazyload": "1.0.3",
     "jquery": "^3.2.1",
+<<<<<<< HEAD
     "vuex": "^2.3.1",
     "better-scroll": "^0.4.0"
+=======
+    "vuex":"^2.3.1",
+    "better-scroll": "^0.4.0",
+    "create-keyframe-animation":"^0.1.0"
+>>>>>>> parent of 44a5719... test
   },
   "devDependencies": {
     "sass-loader": "^6.0.6",
